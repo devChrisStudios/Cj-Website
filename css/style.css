@@ -1,1254 +1,1441 @@
+/* ============================================================
+   BIKFAM STICKER SHOP - Main Stylesheet
+   ============================================================
+   This stylesheet controls ALL the visual styling for the site.
+   It uses a graffiti/street-art aesthetic with a black & red
+   color scheme to match the BIKFAM / CJBIK brand.
+   
+   TABLE OF CONTENTS:
+   1.  CSS Custom Properties (Variables)
+   2.  Reset & Base Styles
+   3.  Typography & Fonts
+   4.  Layout Utilities
+   5.  Header & Navigation
+   6.  Buttons
+   7.  Cards (Product Cards)
+   8.  Hero Section
+   9.  Pages - Home
+   10. Pages - Shop
+   11. Pages - Builder
+   12. Pages - Cart
+   13. Footer
+   14. Responsive (Mobile) Styles
+   15. Animations
+   ============================================================ */
 
 
+
+/* ============================================================
+   1. CSS CUSTOM PROPERTIES (Variables)
+   ============================================================
+   These are like design tokens - change them here and it updates
+   everywhere. Think of them as the "brand colors" you can tweak.
+   --* means it's a variable, and var(--varname) uses it. */
 
 :root {
-
-  --primary: #cf0505;
-  --primary-dark: #af0505;
-  --primary-light: #ff0505;
-  --accent: #f59e0b;
-  --accent-dark: #d97706;
-  --gray-50: #f9fafb;
-  --gray-100: #f3f4f6;
-  --gray-200: #e5e7eb;
-  --gray-300: #d1d5db;
-  --gray-400: #9ca3af;
-  --gray-500: #6b7280;
-  --gray-600: #4b5563;
-  --gray-700: #374151;
-  --gray-800: #1f2937;
-  --gray-900: #111827;
-	--black: #191919;
-  --success: #10b981;
-  --danger: #ef4444;
-  --white: #ffffff;
-
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
-
-  --radius: 8px;
-  --radius-lg: 12px;
-
-  --max-width: 1200px;
-
+    /* --- COLORS --- */
+    --color-bg:            #0a0a0a;   /* Near-black background */
+    --color-bg-alt:        #111111;   /* Slightly lighter black for cards */
+    --color-bg-darker:     #050505;   /* For footer / dark sections */
+    --color-red-primary:   #d90429;   /* Main red - bold, aggressive */
+    --color-red-bright:    #ef233c;   /* Brighter red for hover effects */
+    --color-red-dark:      #8a0319;   /* Darker red for borders */
+    --color-red-glow:      rgba(217, 4, 41, 0.3); /* Red glow effect */
+    --color-white:         #ffffff;
+    --color-text:          #e0e0e0;   /* Main body text */
+    --color-text-muted:    #888888;   /* Less important text */
+    --color-accent-yellow: #ffb703;   /* Yellow accent for contrast */
+    
+    /* --- FONTS --- */
+    /* We load these from Google Fonts in the <head> of each page */
+    --font-heading: 'Bangers', cursive;        /* Bold, comic/graffiti style for headings */
+    --font-subheading: 'Permanent Marker', cursive; /* Handwritten marker style for subheadings */
+    --font-body: 'Segoe UI', 'Roboto', Arial, sans-serif; /* Clean readable body text */
+    
+    /* --- SPACING --- */
+    --space-xs:  0.25rem;  /* 4px */
+    --space-sm:  0.5rem;   /* 8px */
+    --space-md:  1rem;     /* 16px */
+    --space-lg:  2rem;     /* 32px */
+    --space-xl:  4rem;     /* 64px */
+    
+    /* --- SIZES --- */
+    --max-width: 1200px;   /* Max content width on large screens */
+    --header-height: 70px;
+    
+    /* --- BORDERS --- */
+    --border-red: 2px solid var(--color-red-primary);
+    --border-radius: 4px;
 }
 
+
+
+/* ============================================================
+   2. RESET & BASE STYLES
+   ============================================================
+   This smooths out browser differences so everything looks
+   consistent. Browsers have default styles that vary - this
+   resets them to a clean baseline. */
 
 *, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;   /* Makes padding/border count inside element width */
+    margin: 0;
+    padding: 0;
 }
 
-scroll {
-  scroll-behavior: smooth;
+html {
+    scroll-behavior: smooth;  /* Smooth scrolling when clicking anchor links */
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-	color: var(--gray-50);
-  background: var(--black);
-	line-height: 1.6;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+    font-family: var(--font-body);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
+/* Links - base style */
 a {
-  text-decoration: none;
-  color: inherit;
+    color: var(--color-red-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
 }
 
+a:hover {
+    color: var(--color-red-bright);
+}
+
+/* Images - make them responsive by default */
 img {
-  max-width: 100%;
-  height: auto;
-  display: block;
+    max-width: 100%;
+    height: auto;
+    display: block;
 }
 
-button {
-  cursor: pointer;
-  font-family: inherit;
+/* Lists without bullets by default (we add them back when needed) */
+ul {
+    list-style: none;
 }
 
-input, select {
-  font-family: inherit;
-  font-size: inherit;
+/* Selection color - when you highlight text with your mouse */
+::selection {
+    background-color: var(--color-red-primary);
+    color: var(--color-white);
 }
 
+
+
+/* ============================================================
+   3. TYPOGRAPHY & FONTS
+   ============================================================ */
+
+/* Headings use the graffiti/comic font for impact */
+h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    font-weight: 400;         /* Bangers looks best at normal weight */
+    letter-spacing: 0.05em;   /* Slight spacing for readability */
+    color: var(--color-white);
+    text-transform: uppercase; /* Graffiti style - all caps */
+    line-height: 1.1;
+}
+
+h1 { font-size: 3.5rem; margin-bottom: var(--space-md); }
+h2 { font-size: 2.5rem; margin-bottom: var(--space-md); }
+h3 { font-size: 1.8rem; margin-bottom: var(--space-sm); }
+h4 { font-size: 1.3rem; margin-bottom: var(--space-sm); }
+
+/* Subheadings use the marker/handwriting font */
+.subheading {
+    font-family: var(--font-subheading);
+    font-size: 1.2rem;
+    color: var(--color-red-primary);
+    margin-bottom: var(--space-lg);
+}
+
+/* Body text styling */
+p {
+    margin-bottom: var(--space-md);
+    font-size: 1rem;
+}
+
+/* Small / muted text */
+.text-muted {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+}
+
+/* Red highlight text */
+.text-red {
+    color: var(--color-red-primary);
+}
+
+/* Section headers - used for page section titles */
+.section-title {
+    text-align: center;
+    font-size: 2.8rem;
+    margin-bottom: var(--space-sm);
+    position: relative;
+    display: inline-block;
+}
+
+/* Decorative underline for section titles */
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60%;
+    height: 4px;
+    background: var(--color-red-primary);
+    margin: var(--space-sm) auto 0;
+    border-radius: 2px;
+}
+
+/* Center wrapper for section titles */
+.section-header {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+}
+
+
+
+/* ============================================================
+   4. LAYOUT UTILITIES
+   ============================================================ */
+
+/* Main container - centers content and limits width */
 .container {
-  width: 100%;
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 1.5rem;
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;           /* Centers the container */
+    padding: 0 var(--space-lg);
 }
 
-.header {
-  background: var(--white);
-  border-bottom: 1px solid var(--gray-200);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+/* Main content area - pushes footer down using flexbox */
+.main-content {
+    flex: 1;
+    padding-top: calc(var(--header-height) + var(--space-lg));
+    padding-bottom: var(--space-xl);
 }
 
+/* Grid helpers */
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+}
+
+.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+}
+
+/* Flex helpers */
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Section spacing */
+.section {
+    padding: var(--space-xl) 0;
+}
+
+
+
+/* ============================================================
+   5. HEADER & NAVIGATION
+   ============================================================
+   Fixed top navigation bar that stays visible when scrolling.
+   Has the BIKFAM logo on the left, nav links in the middle,
+   and a cart icon on the right. */
+
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;            /* Stays above everything */
+    height: var(--header-height);
+    background: rgba(10, 10, 10, 0.95);
+    border-bottom: 2px solid var(--color-red-primary);
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+}
+
+/* Inner header wrapper */
 .header-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
 }
 
+/* Logo / site title */
 .logo {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: var(--primary);
-  letter-spacing: -0.5px;
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--color-white);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: color 0.2s;
 }
 
-.logo span {
-  color: var(--accent);
+.logo:hover {
+    color: var(--color-red-primary);
 }
 
-.nav {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
+.logo .logo-red {
+    color: var(--color-red-primary);
 }
 
-.nav a {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--gray-600);
-  transition: color 0.2s;  /* Smooth color change on hover */
+/* Navigation links */
+.nav-links {
+    display: flex;
+    gap: var(--space-lg);
+    align-items: center;
 }
 
-.nav a:hover,
-.nav a.active {
-  color: var(--primary);
+.nav-links a {
+    font-family: var(--font-subheading);
+    font-size: 1.1rem;
+    color: var(--color-white);
+    text-transform: uppercase;
+    position: relative;
+    padding: var(--space-xs) 0;
+    transition: color 0.2s;
 }
 
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+/* Red underline on hover - like a graffiti tag underline */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--color-red-primary);
+    transition: width 0.3s ease;
 }
 
-.cart-btn {
-  position: relative;
-  background: none;
-  border: none;
-  font-size: 1.25rem;
-  color: var(--gray-600);
-  padding: 0.5rem;
-  transition: color 0.2s;
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 100%;
 }
 
-.cart-btn:hover {
-  color: var(--primary);
+.nav-links a:hover {
+    color: var(--color-red-primary);
 }
 
+/* Active page indicator */
+.nav-links a.active {
+    color: var(--color-red-primary);
+}
+
+/* Cart icon / link in header */
+.cart-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-family: var(--font-subheading);
+    font-size: 1.1rem;
+    color: var(--color-white);
+}
+
+.cart-link:hover {
+    color: var(--color-red-primary);
+}
+
+/* The little number badge on the cart icon */
 .cart-count {
-  position: absolute;
-  top: 0;
-  right: -4px;
-  background: var(--danger);
-  color: var(--white);
-  font-size: 0.65rem;
-  font-weight: 700;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s;
+    background: var(--color-red-primary);
+    color: var(--color-white);
+    font-size: 0.75rem;
+    font-family: var(--font-body);
+    font-weight: bold;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -10px;
+    right: -14px;
 }
+
+/* Mobile hamburger menu button - hidden on desktop */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--color-white);
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+
+
+/* ============================================================
+   6. BUTTONS
+   ============================================================
+   Graffiti-style buttons with a bold, aggressive look. */
 
 .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.625rem 1.25rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  border-radius: var(--radius);
-  border: none;
-  transition: all 0.2s;
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: var(--space-sm) var(--space-lg);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
 }
 
+/* Primary red button - the main call-to-action */
 .btn-primary {
-  background: var(--primary);
-  color: var(--white);
+    background: var(--color-red-primary);
+    color: var(--color-white);
+    border: 2px solid var(--color-red-primary);
 }
 
 .btn-primary:hover {
-  background: var(--primary-dark);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
+    background: var(--color-red-bright);
+    border-color: var(--color-red-bright);
+    transform: translateY(-2px);  /* Lifts up slightly */
+    box-shadow: 0 4px 20px var(--color-red-glow);
 }
 
-.btn-secondary {
-  background: var(--gray-100);
-  color: var(--gray-700);
-  border: 1px solid var(--gray-200);
+/* Secondary / outline button - inverted look */
+.btn-outline {
+    background: transparent;
+    color: var(--color-red-primary);
+    border: 2px solid var(--color-red-primary);
 }
 
-.btn-secondary:hover {
-  background: var(--gray-200);
+.btn-outline:hover {
+    background: var(--color-red-primary);
+    color: var(--color-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px var(--color-red-glow);
 }
 
-.btn-accent {
-  background: var(--accent);
-  color: var(--white);
+/* Disabled button state */
+.btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
 }
 
-.btn-accent:hover {
-  background: var(--accent-dark);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
-}
-
-.btn-danger {
-  background: var(--danger);
-  color: var(--white);
-}
-
-.btn-danger:hover {
-  background: #dc2626;
-}
-
+/* Small button variant */
 .btn-sm {
-  padding: 0.375rem 0.75rem;
-  font-size: 0.8125rem;
+    font-size: 1rem;
+    padding: var(--space-xs) var(--space-md);
 }
 
+/* Large button variant */
 .btn-lg {
-  padding: 0.875rem 2rem;
-  font-size: 1rem;
+    font-size: 1.5rem;
+    padding: var(--space-md) var(--space-xl);
 }
+
+
+
+/* ============================================================
+   7. CARDS (Product Cards)
+   ============================================================
+   Reusable card component for displaying products. */
+
+.card {
+    background: var(--color-bg-alt);
+    border: 1px solid #222;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.card:hover {
+    border-color: var(--color-red-primary);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px var(--color-red-glow);
+}
+
+/* Card image area */
+.card-image {
+    width: 100%;
+    aspect-ratio: 1;            /* Makes it a perfect square */
+    background: var(--color-bg-darker);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;          /* Crops image to fit nicely */
+}
+
+/* Placeholder content inside card images */
+.card-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading), sans-serif;
+    font-size: 1rem;
+    color: #555;
+    text-transform: uppercase;
+    background: var(--color-bg-darker);
+    border: 2px dashed #333;
+    margin: 0;
+    padding: 0;
+    gap: 8px;
+}
+
+.card-placeholder .placeholder-icon {
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+.card-placeholder .placeholder-text {
+    color: #444;
+    letter-spacing: 0.1em;
+}
+
+/* Card body content */
+.card-body {
+    padding: var(--space-md);
+}
+
+.card-title {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    color: var(--color-white);
+    margin-bottom: var(--space-xs);
+    text-transform: uppercase;
+}
+
+.card-description {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-md);
+}
+
+.card-price {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    color: var(--color-red-primary);
+    margin-bottom: var(--space-md);
+}
+
+/* Price placeholder style */
+.price-placeholder {
+    font-family: var(--font-subheading);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    background: rgba(217, 4, 41, 0.1);
+    border: 1px dashed var(--color-red-dark);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--border-radius);
+    display: inline-block;
+}
+
+.card-footer {
+    padding: 0 var(--space-md) var(--space-md);
+}
+
+
+
+/* ============================================================
+   8. HERO SECTION
+   ============================================================
+   Big, bold hero section for the homepage. */
 
 .hero {
-  background: linear-gradient(135deg, var(--gray-900) 0%, var(--primary-dark) 100%);
-  color: var(--white);
-  padding: 5rem 0;
-  text-align: center;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background: 
+        radial-gradient(ellipse at 20% 50%, rgba(217, 4, 41, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 50%, rgba(217, 4, 41, 0.1) 0%, transparent 50%),
+        var(--color-bg);
+    border-bottom: 3px solid var(--color-red-primary);
 }
 
-.hero h1 {
-  font-size: 3rem;
-  font-weight: 800;
-  letter-spacing: -1px;
-  line-height: 1.2;
-  margin-bottom: 1rem;
+/* Decorative "spray paint" specks - creates a graffiti texture feel */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, rgba(217, 4, 41, 0.3), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(217, 4, 41, 0.2), transparent),
+        radial-gradient(3px 3px at 50px 160px, rgba(217, 4, 41, 0.15), transparent),
+        radial-gradient(2px 2px at 90px 40px, rgba(217, 4, 41, 0.25), transparent),
+        radial-gradient(2px 2px at 160px 120px, rgba(217, 4, 41, 0.2), transparent),
+        radial-gradient(2px 2px at 200px 50px, rgba(217, 4, 41, 0.3), transparent),
+        radial-gradient(3px 3px at 300px 180px, rgba(217, 4, 41, 0.15), transparent),
+        radial-gradient(2px 2px at 400px 90px, rgba(217, 4, 41, 0.2), transparent),
+        radial-gradient(2px 2px at 500px 200px, rgba(217, 4, 41, 0.25), transparent),
+        radial-gradient(2px 2px at 600px 60px, rgba(217, 4, 41, 0.15), transparent),
+        radial-gradient(3px 3px at 700px 150px, rgba(217, 4, 41, 0.2), transparent),
+        radial-gradient(2px 2px at 800px 100px, rgba(217, 4, 41, 0.3), transparent);
+    pointer-events: none; /* Lets clicks pass through to elements below */
 }
 
-.hero p {
-  /*
-    rgba(255, 255, 255, 0.8) is WHITE at 80% opacity.
-    rgba = Red Green Blue Alpha (alpha = transparency).
-    0.0 = fully transparent, 1.0 = fully opaque.
-    Using white at partial opacity creates a subtle, elegant look
-    that's easier to read than pure white against the gradient.
-  */
-  font-size: 1.125rem;
-  color: rgba(255, 255, 255, 0.8);
-  max-width: 600px;
-  margin: 0 auto 2rem;
+.hero-content {
+    position: relative;
+    z-index: 1;
+    padding: var(--space-xl);
 }
 
-.hero .btn {
-  font-size: 1rem;
-  padding: 1rem 2.5rem;
+.hero-title {
+    font-size: 5rem;
+    font-family: var(--font-heading);
+    color: var(--color-white);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-sm);
+    line-height: 1.1;
+    text-shadow: 0 0 30px var(--color-red-glow);
 }
 
-.category-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
+.hero-title .hero-red {
+    color: var(--color-red-primary);
 }
 
-.category-card {
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius-lg);
-  padding: 2rem;
-  text-align: center;
-  /*
-    transition: all 0.3s
-    When ANY property changes, animate smoothly over 0.3 seconds.
-    This makes hover effects feel fluid instead of jarring.
-    0.3s (300ms) is the sweet spot for UI transitions.
-  */
-  transition: all 0.3s;
-  cursor: pointer;
+.hero-subtitle {
+    font-family: var(--font-subheading);
+    font-size: 1.5rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-lg);
 }
 
-.category-card:hover {
-  border-color: var(--primary);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+.hero-cta {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
-.category-icon {
-  font-size: 2.5rem;
-  margin-bottom: 0.75rem;
+/* Hero "drip" effect at the bottom - like spray paint dripping */
+.hero-drip {
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: var(--color-bg);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
 }
 
-.category-card h3 {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--gray-800);
+/* Spray paint drip decorations */
+.drip-decoration {
+    position: absolute;
+    bottom: -2px;
+    width: 8px;
+    height: 30px;
+    background: var(--color-red-primary);
+    border-radius: 0 0 4px 4px;
 }
 
-.category-card p {
-  font-size: 0.8125rem;
-  color: var(--gray-500);
-  margin-top: 0.25rem;
+.drip-decoration:nth-child(1) { left: 15%; height: 25px; }
+.drip-decoration:nth-child(2) { left: 30%; height: 40px; }
+.drip-decoration:nth-child(3) { left: 55%; height: 20px; }
+.drip-decoration:nth-child(4) { left: 70%; height: 35px; }
+.drip-decoration:nth-child(5) { left: 85%; height: 28px; }
+
+
+
+/* ============================================================
+   9. PAGE - HOME
+   ============================================================ */
+
+/* Featured products section on home */
+.featured-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-.products-section {
-  padding: 4rem 0;
+/* About / story section on home */
+.story-section {
+    background: var(--color-bg-alt);
+    border-top: 2px solid var(--color-red-primary);
+    border-bottom: 2px solid var(--color-red-primary);
 }
 
-.products-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 2rem;
+.story-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
 }
 
-.products-header .section-title {
-  margin-bottom: 0;
+.story-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
 }
 
-.product-controls {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+/* Community / social links */
+.social-links {
+    display: flex;
+    gap: var(--space-lg);
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
-.search-box {
-  position: relative;
+.social-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-family: var(--font-subheading);
+    font-size: 1.1rem;
+    color: var(--color-white);
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid #333;
+    border-radius: var(--border-radius);
+    transition: all 0.3s;
 }
 
-.search-box input {
-  padding: 0.5rem 1rem 0.5rem 2.5rem;  /* Extra left padding for icon */
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius);
-  font-size: 0.875rem;
-  width: 220px;
-  background: var(--white);
-  transition: border-color 0.2s;
+.social-link:hover {
+    border-color: var(--color-red-primary);
+    color: var(--color-red-primary);
+    background: rgba(217, 4, 41, 0.05);
 }
 
-.search-box input:focus {
-  outline: none;  /* Remove browser default outline */
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+/* "How it works" steps */
+.steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+    counter-reset: step-counter;  /* For numbering steps */
 }
 
-.search-box::before {
-  content: '\1F50D';
-  position: absolute;
-  left: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 0.875rem;
+.step {
+    text-align: center;
+    position: relative;
+    padding: var(--space-lg) var(--space-md);
 }
 
-.filter-select {
-  padding: 0.5rem 2rem 0.5rem 0.75rem;
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius);
-  font-size: 0.875rem;
-  background: var(--white);
-  appearance: none;
-  /*
-    Custom dropdown arrow as a base64 inline SVG.
-    The URL is a data URI -- the image data is embedded directly
-    in the CSS instead of a separate file. This avoids an extra
-    HTTP request (faster loading).
-  */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.5rem center;
-  cursor: pointer;
+.step-number {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    color: var(--color-red-primary);
+    opacity: 0.5;
+    display: block;
+    margin-bottom: var(--space-sm);
 }
 
-.filter-select:focus {
-  outline: none;
-  border-color: var(--primary);
+.step-title {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    color: var(--color-white);
+    margin-bottom: var(--space-sm);
+    text-transform: uppercase;
 }
 
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.5rem;
+.step-text {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
 }
 
-.product-card {
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius-lg);
-  overflow: hidden;  /* clips image to rounded corners */
-  transition: all 0.3s;
+
+
+/* ============================================================
+   10. PAGE - SHOP
+    ============================================================ */
+
+.shop-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl);
+    max-width: 900px;
+    margin: 0 auto;
 }
 
-.product-card:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-4px);  /* Lift card on hover */
+/* Sticker color indicator badge */
+.color-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: var(--space-sm);
 }
 
-.product-card-image {
-  width: 100%;
-  height: 220px;
-  /*
-    object-fit: cover
-    Crops the image to fill the container while maintaining aspect
-    ratio. Like Python Pillow's thumbnail() with crop.
-    Without this, images would stretch or leave empty space.
-  */
-  object-fit: cover;
-  background: var(--gray-100);
+.color-badge-white {
+    background: #333;
+    color: var(--color-white);
+    border: 1px solid #555;
 }
 
-.product-card-body {
-  padding: 1.25rem;
+.color-badge-black {
+    background: var(--color-white);
+    color: var(--color-bg);
+    border: 1px solid #555;
 }
 
-.product-card-category {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;  /* Make category ALL CAPS */
-  letter-spacing: 0.5px;     /* Space out letters for readability */
-  color: var(--primary);
-  margin-bottom: 0.5rem;
+/* Pack contents list */
+.pack-contents {
+    margin-bottom: var(--space-md);
 }
 
-.product-card-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--gray-900);
-  margin-bottom: 0.5rem;
-  /*
-    CLAMP TEXT TO 2 LINES
-    =====================
-    These vendor-prefixed properties clamp text at 2 lines with "...":
-
-    display: -webkit-box          – Use flexbox-like box model
-    -webkit-line-clamp: 2         – Max 2 lines
-    -webkit-box-orient: vertical  – Stack vertically
-    overflow: hidden              – Hide overflow
-
-    This prevents long product names from breaking the card layout.
-    It's like Python's textwrap.shorten(text, width=...).
-  */
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.pack-contents li {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    padding: 2px 0;
 }
 
-.product-card-rating {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  margin-bottom: 0.75rem;
+.pack-contents li::before {
+    content: '>';
+    color: var(--color-red-primary);
+    margin-right: var(--space-sm);
+    font-weight: bold;
 }
 
-.stars {
-  color: var(--accent);  /* Gold color for stars */
-  font-size: 0.875rem;
+
+
+/* ============================================================
+   11. PAGE - BUILDER (Custom 12-Pack)
+    ============================================================ */
+
+/* Builder layout - sidebar + grid */
+.builder-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: var(--space-lg);
+    align-items: start;
 }
 
-.rating-text {
-  font-size: 0.8125rem;
-  color: var(--gray-500);
+/* Grid of available stickers to pick from */
+.sticker-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
 }
 
-.product-card-price {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--gray-900);
-  margin-bottom: 1rem;
+/* Individual sticker option in the builder */
+.sticker-option {
+    background: var(--color-bg-alt);
+    border: 2px solid #222;
+    border-radius: var(--border-radius);
+    padding: var(--space-md);
+    text-align: center;
+    cursor: pointer;            /* Shows clickable hand */
+    transition: all 0.3s ease;
+    user-select: none;          /* Prevents text selection when clicking fast */
 }
 
-.product-card .btn {
-  width: 100%;  /* Full-width button in card */
+.sticker-option:hover {
+    border-color: var(--color-text-muted);
+    transform: translateY(-2px);
 }
 
-.product-detail {
-  padding: 3rem 0;
+/* Selected state - glows red with a check indicator */
+.sticker-option.selected {
+    border-color: var(--color-red-primary);
+    background: rgba(217, 4, 41, 0.1);
+    box-shadow: 0 0 15px var(--color-red-glow);
+    position: relative;
 }
 
-.breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.875rem;
-  color: var(--gray-500);
-  margin-bottom: 2rem;
+.sticker-option.selected::after {
+    content: '✓';
+    position: absolute;
+    top: var(--space-xs);
+    right: var(--space-xs);
+    background: var(--color-red-primary);
+    color: var(--color-white);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
 }
 
-.breadcrumb a:hover {
-  color: var(--primary);
+.sticker-option .sticker-preview {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--space-sm);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    border: 2px dashed #333;
+    position: relative;
 }
 
-.breadcrumb .separator {
-  color: var(--gray-300);
+.sticker-option .sticker-preview .img-placeholder {
+    opacity: 0.5;
+    font-size: 2rem;
 }
 
-.detail-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: start;
+.sticker-option .sticker-name {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    color: var(--color-white);
+    text-transform: uppercase;
+    margin-bottom: var(--space-xs);
 }
 
-.detail-image {
-  width: 100%;
-  border-radius: var(--radius-lg);
-  background: var(--gray-100);
+.sticker-option .sticker-color {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
 }
 
-.detail-category {
-  font-size: 0.8125rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--primary);
-  margin-bottom: 0.75rem;
+/* Builder sidebar - shows selected and progress */
+.builder-sidebar {
+    background: var(--color-bg-alt);
+    border: 1px solid #222;
+    border-radius: var(--border-radius);
+    padding: var(--space-lg);
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-lg));
 }
 
-.detail-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--gray-900);
-  margin-bottom: 1rem;
-  line-height: 1.2;
+.builder-sidebar h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--space-md);
 }
 
-.detail-rating {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
+/* Progress bar showing how many of 12 selected */
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #222;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: var(--space-md);
 }
 
-.detail-price {
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--gray-900);
-  margin-bottom: 1.5rem;
+.progress-fill {
+    height: 100%;
+    background: var(--color-red-primary);
+    width: 0%;
+    transition: width 0.3s ease;
+    border-radius: 4px;
 }
 
-.detail-description {
-  font-size: 1rem;
-  color: var(--gray-600);
-  line-height: 1.7;
-  margin-bottom: 2rem;
+.progress-text {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--color-white);
+    text-align: center;
+    margin-bottom: var(--space-md);
 }
 
-.detail-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+.progress-text .count {
+    color: var(--color-red-primary);
 }
 
-.quantity-selector {
-  display: flex;
-  align-items: center;
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius);
-  overflow: hidden;
+/* Selected items list in sidebar */
+.selected-list {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: var(--space-md);
 }
 
-.quantity-selector button {
-  width: 40px;
-  height: 40px;
-  border: none;
-  background: var(--gray-50);
-  font-size: 1.125rem;
-  color: var(--gray-700);
-  transition: background 0.2s;
+.selected-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-sm) 0;
+    border-bottom: 1px solid #222;
+    font-size: 0.9rem;
 }
 
-.quantity-selector button:hover {
-  background: var(--gray-200);
+.selected-item:last-child {
+    border-bottom: none;
 }
 
-.quantity-selector input {
-  width: 50px;
-  height: 40px;
-  text-align: center;
-  border: none;
-  border-left: 1px solid var(--gray-200);
-  border-right: 1px solid var(--gray-200);
-  font-size: 0.9375rem;
-  font-weight: 600;
-  -moz-appearance: textfield;
+.selected-item .remove-btn {
+    background: none;
+    border: none;
+    color: var(--color-red-primary);
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 0 var(--space-xs);
+    transition: color 0.2s;
 }
 
-.quantity-selector input::-webkit-inner-spin-button,
-.quantity-selector input::-webkit-outer-spin-button {
-  -webkit-appearance: none;
+.selected-item .remove-btn:hover {
+    color: var(--color-red-bright);
 }
 
-.detail-actions .btn {
-  padding: 0.75rem 2rem;
-  font-size: 1rem;
+/* Empty state message in builder */
+.builder-empty {
+    text-align: center;
+    padding: var(--space-xl);
+    color: var(--color-text-muted);
+    font-family: var(--font-subheading);
 }
 
-.detail-actions .btn {
-  padding: 0.75rem 2rem;
-  font-size: 1rem;
+.builder-empty .empty-icon {
+    font-size: 4rem;
+    margin-bottom: var(--space-md);
+    opacity: 0.5;
 }
 
-.stock-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.375rem;
-  padding: 0.25rem 0.75rem;
-  border-radius: 999px;
-  font-size: 0.8125rem;
-  font-weight: 600;
-}
 
-.stock-badge.in-stock {
-  background: #d1fae5;  /* Light green */
-  color: #065f46;        /* Dark green text */
-}
 
-.stock-badge.out-of-stock {
-  background: #fee2e2;  /* Light red */
-  color: #991b1b;        /* Dark red text */
-}
-
-/*
-  ====================================================================
-  CART PAGE
-  ====================================================================
-  Uses a two-column layout: items list (left) + order summary (right).
-*/
-.cart-page {
-  padding: 3rem 0;
-}
-
-.cart-empty {
-  text-align: center;
-  padding: 4rem 0;
-}
-
-.cart-empty-icon {
-  font-size: 4rem;
-  margin-bottom: 1rem;
-}
-
-.cart-empty h2 {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.cart-empty p {
-  color: var(--gray-500);
-  margin-bottom: 1.5rem;
-}
+/* ============================================================
+   12. PAGE - CART
+    ============================================================ */
 
 .cart-layout {
-  display: grid;
-  grid-template-columns: 1fr 360px;  /* Items auto, summary 360px */
-  gap: 2rem;
-  align-items: start;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: var(--space-xl);
+    align-items: start;
 }
 
+/* Cart items list */
 .cart-items {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+    background: var(--color-bg-alt);
+    border: 1px solid #222;
+    border-radius: var(--border-radius);
+    overflow: hidden;
 }
 
 .cart-item {
-  /*
-    GRID LAYOUT FOR CART ITEMS
-    Three columns: image (100px) | info (auto) | actions (auto)
-  */
-  display: grid;
-  grid-template-columns: 100px 1fr auto;
-  gap: 1.25rem;
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius-lg);
-  padding: 1.25rem;
-  align-items: center;
+    display: grid;
+    grid-template-columns: 80px 1fr auto auto;
+    gap: var(--space-md);
+    align-items: center;
+    padding: var(--space-md);
+    border-bottom: 1px solid #222;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
 }
 
 .cart-item-image {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: var(--radius);
-  background: var(--gray-100);
+    width: 80px;
+    height: 80px;
+    background: var(--color-bg-darker);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
 }
 
-.cart-item-info h3 {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
+.cart-item-info h4 {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    color: var(--color-white);
+    margin-bottom: 2px;
 }
 
-.cart-item-info .item-price {
-  color: var(--gray-500);
-  font-size: 0.875rem;
+.cart-item-info .item-detail {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
 }
 
-.cart-item-actions {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.75rem;
+.cart-item-quantity {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.qty-btn {
+    background: #222;
+    border: 1px solid #333;
+    color: var(--color-white);
+    width: 30px;
+    height: 30px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.qty-btn:hover {
+    background: var(--color-red-primary);
+    border-color: var(--color-red-primary);
 }
 
 .cart-item-total {
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: var(--gray-900);
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: var(--color-red-primary);
+    text-align: right;
 }
 
 .cart-item-remove {
-  background: none;
-  border: none;
-  color: var(--gray-400);
-  font-size: 0.8125rem;
-  transition: color 0.2s;
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    font-size: 0.8rem;
+    padding: var(--space-xs);
+    transition: color 0.2s;
 }
 
 .cart-item-remove:hover {
-  color: var(--danger);
+    color: var(--color-red-primary);
 }
 
-/*
-  CART SUMMARY SIDEBAR
-  ====================
-  Uses position: sticky to follow the user as they scroll.
-  top: 5rem leaves room for the fixed header (4rem + some gap).
-*/
+/* Cart sidebar / summary */
 .cart-summary {
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius-lg);
-  padding: 1.5rem;
-  position: sticky;
-  top: 5rem;
+    background: var(--color-bg-alt);
+    border: 1px solid #222;
+    border-radius: var(--border-radius);
+    padding: var(--space-lg);
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-lg));
 }
 
 .cart-summary h3 {
-  font-size: 1.125rem;
-  font-weight: 700;
-  margin-bottom: 1.25rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--gray-200);
+    font-size: 1.5rem;
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid #222;
 }
 
 .summary-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 0;
-  font-size: 0.9375rem;
-  color: var(--gray-600);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--space-md);
+    font-size: 0.95rem;
 }
 
-/*
-  .summary-row.total overrides the parent .summary-row styles.
-  Since .total comes AFTER .summary-row in the HTML class list,
-  and has the same specificity, it wins via CASCADE ORDER.
-*/
 .summary-row.total {
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: var(--gray-900);
-  border-top: 1px solid var(--gray-200);
-  margin-top: 0.5rem;
-  padding-top: 1rem;
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    color: var(--color-white);
+    padding-top: var(--space-md);
+    border-top: 2px solid var(--color-red-primary);
+    margin-top: var(--space-md);
 }
 
-.cart-summary .btn {
-  width: 100%;
-  margin-top: 1.25rem;
+.summary-row.total .amount {
+    color: var(--color-red-primary);
 }
 
-
-/*
-  ====================================================================
-  CHECKOUT PAGE
-  ====================================================================
-  Same two-column layout as cart, with the form on the left.
-*/
-.checkout-page {
-  padding: 3rem 0;
+/* Empty cart state */
+.cart-empty {
+    text-align: center;
+    padding: var(--space-xl);
 }
 
-.checkout-layout {
-  display: grid;
-  grid-template-columns: 1fr 400px;
-  gap: 2rem;
-  align-items: start;
+.cart-empty .empty-icon {
+    font-size: 5rem;
+    margin-bottom: var(--space-md);
+    opacity: 0.5;
 }
 
-.checkout-form {
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius-lg);
-  padding: 2rem;
+/* Stripe / checkout notice */
+.stripe-notice {
+    background: rgba(217, 4, 41, 0.1);
+    border: 1px dashed var(--color-red-dark);
+    border-radius: var(--border-radius);
+    padding: var(--space-md);
+    margin-top: var(--space-md);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
 }
 
-.checkout-form h2 {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-}
-
-.form-section {
-  margin-bottom: 1.5rem;
-}
-
-.form-section:last-child {
-  margin-bottom: 0;
-}
-
-.form-section h3 {
-  font-size: 0.9375rem;
-  font-weight: 600;
-  color: var(--gray-700);
-  margin-bottom: 1rem;
-}
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;  /* Two equal columns */
-  gap: 1rem;
-}
-
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.form-group.full {
-  grid-column: 1 / -1;  /* Span FULL WIDTH across all grid columns */
-}
-
-.form-group label {
-  display: block;  /* Labels on their own line (above input) */
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: var(--gray-700);
-  margin-bottom: 0.375rem;
-}
-
-.form-group input,
-.form-group select {
-  width: 100%;
-  padding: 0.625rem 0.75rem;
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius);
-  font-size: 0.9375rem;
-  transition: border-color 0.2s;
-  background: var(--white);
-}
-
-.form-group input:focus,
-.form-group select:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-}
-
-.form-group input.error {
-  border-color: var(--danger);  /* Red border for validation errors */
-}
-
-.form-error {
-  font-size: 0.75rem;
-  color: var(--danger);
-  margin-top: 0.25rem;
-  display: none;  /* Hidden by default, shown via JS (.error class) */
-}
-
-.form-group.error .form-error {
-  display: block;  /* Show error when parent has .error class */
-}
-
-/*
-  CHECKOUT SUMMARY SIDEBAR
-  Reuses .cart-summary styling, positioned sticky.
-*/
-.checkout-summary .cart-summary {
-  position: sticky;
-  top: 5rem;
-}
-
-.checkout-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid var(--gray-100);  /* Light separator */
-}
-
-.checkout-item:last-child {
-  border-bottom: none;  /* No border on last item */
-}
-
-.checkout-item-name {
-  font-size: 0.875rem;
-  color: var(--gray-700);
-}
-
-.checkout-item-name span {
-  color: var(--gray-500);
-  font-size: 0.8125rem;
-}
-
-.checkout-item-price {
-  font-size: 0.875rem;
-  font-weight: 600;
-}
-
-/*
-  ORDER CONFIRMATION (shown after successful checkout)
-  Centered text with a large checkmark icon.
-*/
-.order-confirmation {
-  text-align: center;
-  padding: 4rem 0;
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-.confirmation-icon {
-  font-size: 4rem;
-  margin-bottom: 1rem;
-}
-
-.order-confirmation h1 {
-  font-size: 2rem;
-  font-weight: 800;
-  margin-bottom: 0.75rem;
-}
-
-.order-confirmation p {
-  color: var(--gray-600);
-  margin-bottom: 0.5rem;
-}
-
-.order-number {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: var(--primary);
-  margin: 1rem 0 2rem;
+.stripe-notice strong {
+    color: var(--color-red-primary);
+    display: block;
+    margin-bottom: var(--space-xs);
+    font-family: var(--font-subheading);
+    text-transform: uppercase;
 }
 
 
-/*
-  ====================================================================
-  FOOTER
-  ====================================================================
-  Dark background with a multi-column layout.
-  margin-top: auto pushes the footer to the bottom when using
-  flexbox on the body (sticky footer technique).
-*/
-.footer {
-  background: var(--gray-900);
-  color: var(--gray-400);
-  padding: 3rem 0 1.5rem;
-  margin-top: auto;
+
+/* ============================================================
+   13. FOOTER
+    ============================================================ */
+
+.site-footer {
+    background: var(--color-bg-darker);
+    border-top: 2px solid var(--color-red-primary);
+    padding: var(--space-xl) 0 var(--space-lg);
+    margin-top: auto;           /* Pushes footer to bottom with flex */
 }
 
 .footer-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;  /* Brand gets 2x width */
-  gap: 2rem;
-  margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: var(--space-xl);
 }
 
-.footer-brand h3 {
-  color: var(--white);
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin-bottom: 0.75rem;
+.footer-brand {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    color: var(--color-white);
+    margin-bottom: var(--space-sm);
 }
 
-.footer-brand p {
-  font-size: 0.875rem;
-  line-height: 1.7;
+.footer-brand .brand-red {
+    color: var(--color-red-primary);
 }
 
-.footer-col h4 {
-  color: var(--white);
-  font-size: 0.875rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
+.footer-description {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    max-width: 350px;
 }
 
-.footer-col a {
-  display: block;  /* Each link on its own line */
-  font-size: 0.8125rem;
-  color: var(--gray-400);
-  margin-bottom: 0.5rem;
-  transition: color 0.2s;
+.footer-heading {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: var(--color-white);
+    margin-bottom: var(--space-md);
+    text-transform: uppercase;
 }
 
-.footer-col a:hover {
-  color: var(--white);
+.footer-links li {
+    margin-bottom: var(--space-sm);
+}
+
+.footer-links a {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: var(--color-red-primary);
 }
 
 .footer-bottom {
-  border-top: 1px solid var(--gray-800);
-  padding-top: 1.5rem;
-  font-size: 0.8125rem;
-  text-align: center;
+    margin-top: var(--space-xl);
+    padding-top: var(--space-md);
+    border-top: 1px solid #222;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
 }
 
 
-/*
-  ====================================================================
-  TOAST NOTIFICATION
-  ====================================================================
-  A popup that appears at the bottom-right of the screen.
-  Uses CSS transitions to slide up and fade in.
 
-  position: fixed positions it relative to the VIEWPORT (browser
-  window), not the page. So it stays in place even when scrolling.
+/* ============================================================
+   14. RESPONSIVE (MOBILE) STYLES
+    ============================================================
+   These kick in at different screen widths to make the site
+   look good on phones and tablets. */
 
-  transform: translateY(100px) pushes it BELOW its normal position.
-  When .show is added, transform: translateY(0) moves it back.
-  Combined with opacity: 0 → 1, this creates a "slide up + fade in"
-  animation.
-*/
-.toast {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  background: var(--gray-900);
-  color: var(--white);
-  padding: 1rem 1.5rem;
-  border-radius: var(--radius);
-  font-size: 0.875rem;
-  font-weight: 500;
-  box-shadow: var(--shadow-lg);
-  transform: translateY(100px);
-  opacity: 0;
-  transition: all 0.3s ease;
-  z-index: 200;
+/* Tablet and below - screens smaller than 900px */
+@media (max-width: 900px) {
+    h1 { font-size: 2.8rem; }
+    h2 { font-size: 2rem; }
+    
+    .hero-title { font-size: 3.5rem; }
+    .hero-subtitle { font-size: 1.2rem; }
+    
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    
+    .shop-grid,
+    .featured-grid { grid-template-columns: 1fr; }
+    
+    .builder-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .builder-sidebar {
+        position: static;       /* No longer sticky on mobile */
+    }
+    
+    .cart-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .steps {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .sticker-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .cart-item {
+        grid-template-columns: 60px 1fr;
+        gap: var(--space-sm);
+    }
+    
+    .cart-item-total,
+    .cart-item-remove {
+        grid-column: 2;
+    }
 }
 
-.toast.show {
-  transform: translateY(0);
-  opacity: 1;
+/* Mobile - screens smaller than 600px */
+@media (max-width: 600px) {
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.6rem; }
+    
+    .container {
+        padding: 0 var(--space-md);
+    }
+    
+    .hero-title { font-size: 2.5rem; }
+    .hero-subtitle { font-size: 1rem; }
+    .hero { min-height: 60vh; }
+    
+    /* Mobile nav - hamburger menu */
+    .menu-toggle {
+        display: block;
+    }
+    
+    .nav-links {
+        display: none;           /* Hidden by default on mobile */
+        position: absolute;
+        top: var(--header-height);
+        left: 0;
+        right: 0;
+        background: rgba(10, 10, 10, 0.98);
+        flex-direction: column;
+        padding: var(--space-lg);
+        border-bottom: 2px solid var(--color-red-primary);
+        gap: var(--space-md);
+    }
+    
+    .nav-links.open {
+        display: flex;           /* Shown when toggled */
+    }
+    
+    .grid-2, .grid-3, .grid-4 {
+        grid-template-columns: 1fr;
+    }
+    
+    .featured-grid { grid-template-columns: 1fr; }
+    .shop-grid { grid-template-columns: 1fr; }
+    .sticker-grid { grid-template-columns: repeat(2, 1fr); }
+    
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .cart-item {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .cart-item-image {
+        margin: 0 auto;
+    }
+    
+    .hero-cta {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn-lg {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
 }
 
-.toast.success {
-  background: var(--success);  /* Green for success */
+
+
+/* ============================================================
+   15. ANIMATIONS
+    ============================================================ */
+
+/* Fade-in animation for page content */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
-.toast.error {
-  background: var(--danger);   /* Red for errors */
+.fade-in {
+    animation: fadeIn 0.6s ease forwards;
 }
 
+.fade-in-delay-1 { animation-delay: 0.1s; }
+.fade-in-delay-2 { animation-delay: 0.2s; }
+.fade-in-delay-3 { animation-delay: 0.3s; }
 
-/*
-  LOADING STATE
-  Shown while JavaScript fetches data.
-*/
-.loading {
-  text-align: center;
-  padding: 3rem;
-  color: var(--gray-400);
+/* Pulsing glow effect - good for call-to-action elements */
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 10px var(--color-red-glow); }
+    50%      { box-shadow: 0 0 25px var(--color-red-glow), 0 0 50px rgba(217, 4, 41, 0.1); }
 }
 
-
-/*
-  ====================================================================
-  RESPONSIVE DESIGN (MEDIA QUERIES)
-  ====================================================================
-  Media queries apply CSS ONLY when certain CONDITIONS are met.
-  They're like Python's conditional statements but for layout.
-
-  SYNTAX:
-  @media (condition) {
-    /* CSS rules here apply only when condition is true */
-  }
-
-  The condition (max-width: 1024px) means: "apply when the viewport
-  is AT MOST 1024 pixels wide" (i.e., tablet or smaller).
-
-  DESIGN PRINCIPLE: MOBILE-FIRST vs DESKTOP-FIRST
-  ===============================================
-  - MOBILE-FIRST: Start with mobile styles, add @media (min-width)
-    for larger screens (recommended by Google)
-  - DESKTOP-FIRST: Start with desktop styles, add @media (max-width)
-    for smaller screens (what we did here -- simpler for learning)
-
-  Either approach works; consistency matters more.
-
-  BREAKPOINTS (common screen sizes):
-  - 480px: Small phones
-  - 768px: Tablets / large phones
-  - 1024px: Small laptops / landscape tablets
-  - 1200px: Desktop
-*/
-
-/*
-  TABLET (≤1024px)
-  ================
-  Mostly collapses two-column layouts to single column.
-*/
-@media (max-width: 1024px) {
-  .detail-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .cart-layout,
-  .checkout-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .footer-grid {
-    grid-template-columns: 1fr 1fr;  /* 2 columns instead of 4 */
-  }
+.pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
 }
 
-/*
-  PHONE (≤768px)
-  ==============
-  More aggressive adjustments for smaller screens.
-  Decrease font sizes, stack elements vertically.
-*/
-@media (max-width: 768px) {
-  .hero h1 {
-    font-size: 2rem;  /* Smaller heading on phone */
-  }
-
-  .hero p {
-    font-size: 1rem;
-  }
-
-  .product-controls {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .search-box {
-    width: 100%;
-  }
-
-  .search-box input {
-    width: 100%;
-  }
-
-  .filter-select {
-    width: 100%;
-  }
-
-  .product-grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 1rem;
-  }
-
-  .cart-item {
-    grid-template-columns: 80px 1fr;
-    gap: 1rem;
-  }
-
-  /* Move cart item actions to a new row */
-  .cart-item-actions {
-    grid-column: 1 / -1;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  .form-row {
-    grid-template-columns: 1fr;
-  }
-
-  .footer-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .products-header {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .nav {
-    gap: 1rem;
-  }
-
-  .detail-actions {
-    flex-direction: column;
-  }
-
-  .detail-actions .btn {
-    width: 100%;
-  }
+/* Drip animation - makes the drips slowly grow */
+@keyframes drip {
+    0%   { height: 0; opacity: 0; }
+    50%  { opacity: 1; }
+    100% { height: var(--drip-height, 30px); opacity: 0.8; }
 }
 
-/*
-  SMALL PHONE (≤480px)
-  ====================
-  Single-column product grid, tighter header.
-*/
-@media (max-width: 480px) {
-  .product-grid {
-    grid-template-columns: 1fr;  /* One card per row */
-  }
-
-  .header-inner {
-    height: 3.5rem;  /* Shorter header on small phones */
-  }
-
-  .logo {
-    font-size: 1.25rem;
-  }
+.drip-decoration {
+    animation: drip 3s ease-in-out infinite;
 }
 
-/*
-  ====================================================================
-  CSS SUMMARY
-  ====================================================================
-  Core concepts covered:
-  1.  CSS Variables (custom properties) for theming
-  2.  CSS Reset for cross-browser consistency
-  3.  Flexbox for 1D layouts (header, navigation, cards)
-  4.  CSS Grid for 2D layouts (product grid, cart, checkout)
-  5.  Responsive design with auto-fit/minmax (intrinsic layouts)
-  6.  Media queries for breakpoint-based layouts
-  7.  Pseudo-classes (:hover, :focus) for interactivity
-  8.  Pseudo-elements (::before, ::after) for decorative content
-  9.  Transitions for smooth animations
-  10. Position: sticky for persistent elements
-  11. Compound selectors for scoped styling
-  12. object-fit for image cropping
-  13. appearance: none for custom form styling
-  14. The cascade and specificity rules
-  ====================================================================
-*/
+.drip-decoration:nth-child(2) { animation-delay: 0.5s; }
+.drip-decoration:nth-child(3) { animation-delay: 1s; }
+.drip-decoration:nth-child(4) { animation-delay: 1.5s; }
+.drip-decoration:nth-child(5) { animation-delay: 2s; }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* Spray flick / shake for hover effects */
+@keyframes sprayFlick {
+    0%   { transform: translate(0, 0) rotate(0deg); }
+    25%  { transform: translate(2px, -1px) rotate(0.5deg); }
+    50%  { transform: translate(-1px, 1px) rotate(-0.5deg); }
+    75%  { transform: translate(1px, 2px) rotate(0.3deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}

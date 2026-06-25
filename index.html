@@ -1,43 +1,420 @@
 <!DOCTYPE html>
-
+<!-- ============================================================
+     BIKFAM STICKER SHOP - Home Page
+     ============================================================
+     This is the main landing page for the sticker shop.
+     It introduces the brand, shows featured products, and
+     tells the story behind BIKFAM.
+     
+     FILE STRUCTURE NOTES:
+     - CSS is in css/style.css
+     - JavaScript is in js/main.js
+     - Images go in the images/ folder
+     
+     THINGS YOU NEED TO CUSTOMIZE:
+     1. The $PRICE placeholders - replace with actual prices
+     2. The image placeholders - replace with real sticker images
+     3. Social media links - update the href values
+     4. The YouTube channel link
+     ============================================================ -->
 
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>BIKFAM Shop</title>
-		<link rel="stylesheet" href="css/style.css">
-	</head>
-	<body>
-		<header id="site-header"></header>
-		<main>
-			<section class="hero">
-				<div class="container">
-					<h1>BIKFAM Shop</h1>
-					<p>Shop CJBIK Merch</p>
-					<a href="products.html" class="btn btn-accent">Shop Now</a>
-				</div>
-			</section>
+<head>
 
-			<section class="products-section">
-				<div class="container">
-					<h2 class="section-title">Featured Products</h2>
-					<div id="product-grid" class="product-grid">
-						<div class="loading">Loading products...</div>
-					</div>
-					<div style="text-align:center;margin-top:2rem">
-						<a href="products.html" class="btn btn-secondary">View All Products →</a>
-					</div>
-				</div>
-			</section>
-		</main>
+    <!-- ======== META TAGS ======== -->
+    <!-- These tell browsers and search engines about the page -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BIKFAM Sticker Shop - Official merch from CJBIK. Premium stickers for your bike, helmet, and gear.">
+    
+    <!-- ======== PAGE TITLE ======== -->
+    <!-- This appears in the browser tab and search results -->
+    <title>BIKFAM — Official Sticker Shop</title>
+    
+    <!-- ======== FONTS ======== -->
+    <!-- Google Fonts: Bangers (graffiti style) and Permanent Marker (handwritten) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Permanent+Marker&display=swap" rel="stylesheet">
+    
+    <!-- ======== STYLESHEET ======== -->
+    <link rel="stylesheet" href="css/style.css">
 
-		<footer id="site-footer"></footer>
+</head>
+<body data-page="home">
 
-		<script src="js/cart.js"></script>
-		<script src="js/main.js"></script>
-		<script src="js/products.js"></script>
+    <!-- ============================================================
+         HEADER / NAVIGATION
+         ============================================================
+         This is the same on every page. It's fixed to the top so
+         it stays visible while scrolling. -->
+    
+    <header class="site-header">
+        <div class="header-inner">
+            
+            <!-- Logo - links back to home -->
+            <a href="index.html" class="logo">
+                <span class="logo-red">BIK</span>FAM
+            </a>
+            
+            <!-- Hamburger menu button (only visible on mobile) -->
+            <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+            
+            <!-- Navigation links -->
+            <nav class="nav-links">
+                <a href="index.html" class="active">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="build.html">Custom Pack</a>
+                <a href="cart.html" class="cart-link">
+                    Cart
+                    <span class="cart-count">0</span>
+                </a>
+            </nav>
+            
+        </div>
+    </header>
 
-	</body>
+
+    <!-- ============================================================
+         MAIN CONTENT
+         ============================================================ -->
+    
+    <main class="main-content">
+
+        <!-- ============================================================
+             HERO SECTION
+             ============================================================
+             The big, bold introduction at the top of the page.
+             Uses the graffiti aesthetic with spray-paint texture and
+             red accents. -->
+        
+        <section class="hero">
+            
+            <!-- Decorative "spray paint" drip effects at the bottom -->
+            <div class="hero-drip"></div>
+            <div class="drip-decoration"></div>
+            <div class="drip-decoration"></div>
+            <div class="drip-decoration"></div>
+            <div class="drip-decoration"></div>
+            <div class="drip-decoration"></div>
+            
+            <div class="hero-content fade-in">
+                
+                <!-- Main headline -->
+                <h1 class="hero-title">
+                    <span class="hero-red">BIK</span>FAM<br>
+                    <span style="font-size: 0.5em; display: block;">STICKER SHOP</span>
+                </h1>
+                
+                <p class="hero-subtitle">
+                    Premium stickers for your ride. <br>
+                    Rep the fam on your bike, helmet, and gear.
+                </p>
+                
+                <!-- Call-to-action buttons -->
+                <div class="hero-cta">
+                    <a href="shop.html" class="btn btn-primary btn-lg pulse-glow">Shop Packs</a>
+                    <a href="build.html" class="btn btn-outline btn-lg">Build Your Own</a>
+                </div>
+                
+            </div>
+        </section>
+
+
+        <!-- ============================================================
+             HOW IT WORKS SECTION
+             ============================================================ -->
+        
+        <section class="section">
+            <div class="container">
+                
+                <div class="section-header">
+                    <h2 class="section-title">How It Works</h2>
+                    <p class="subheading">Three simple steps to get your stickers</p>
+                </div>
+                
+                <div class="steps">
+                    
+                    <!-- Step 1 -->
+                    <div class="step fade-in fade-in-delay-1">
+                        <span class="step-number">01</span>
+                        <h3 class="step-title">Pick Your Pack</h3>
+                        <p class="step-text">
+                            Choose a pre-made White or Black 12-pack, or 
+                            build your own custom pack by mixing and matching 
+                            designs.
+                        </p>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="step fade-in fade-in-delay-2">
+                        <span class="step-number">02</span>
+                        <h3 class="step-title">Add to Cart</h3>
+                        <p class="step-text">
+                            Load up your cart and head to checkout. 
+                            Your stickers are made with premium vinyl 
+                            that's built to last.
+                        </p>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="step fade-in fade-in-delay-3">
+                        <span class="step-number">03</span>
+                        <h3 class="step-title">Rep the Fam</h3>
+                        <p class="step-text">
+                            Slap 'em on your bike, helmet, laptop — 
+                            anywhere you want to show your BIKFAM pride. 
+                            Ride wild!
+                        </p>
+                    </div>
+                    
+                </div>
+                
+            </div>
+        </section>
+
+
+        <!-- ============================================================
+             FEATURED PRODUCTS SECTION
+             ============================================================ -->
+        
+        <section class="section" style="background: var(--color-bg-alt);">
+            <div class="container">
+                
+                <div class="section-header">
+                    <h2 class="section-title">Featured Packs</h2>
+                    <p class="subheading">Our most popular options</p>
+                </div>
+                
+                <div class="featured-grid">
+                    
+                    <!-- ======== WHITE 12-PACK CARD ======== -->
+                    <!-- 
+                         IMAGE: Replace the placeholder below with:
+                         <img src="images/white-pack.jpg" alt="White 12-Pack">
+                    -->
+                    <div class="card fade-in fade-in-delay-1">
+                        <div class="card-image">
+                            <div class="card-placeholder">
+                                <span class="placeholder-icon">📷</span>
+                                <span class="placeholder-text">INSERT IMAGE</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">White 12-Pack</h3>
+                            <span class="color-badge color-badge-white">White</span>
+                            <p class="card-description">
+                                Twelve premium white stickers. Perfect for dark 
+                                surfaces like helmets, bikes, and laptops. 
+                                Clean look that stands out.
+                            </p>
+                            <!-- PRICE: Replace this placeholder with your actual price -->
+                            <div class="card-price">
+                                <span class="price-placeholder">INSERT PRICE</span>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <!-- DATA ATTRIBUTES explained:
+                                 data-id    = unique identifier for this product
+                                 data-name  = display name
+                                 data-price = price (must be a number)
+                                 data-image = emoji/image placeholder -->
+                            <button class="btn btn-primary btn-sm btn-add-cart"
+                                    data-id="white-pack"
+                                    data-name="White 12-Pack"
+                                    data-price="0"       <!-- change 0 to your price, e.g. 24.99 -->
+                                    data-image="🤍">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- ======== BLACK 12-PACK CARD ======== -->
+                    <!-- 
+                         IMAGE: Replace the placeholder below with:
+                         <img src="images/black-pack.jpg" alt="Black 12-Pack">
+                    -->
+                    <div class="card fade-in fade-in-delay-2">
+                        <div class="card-image">
+                            <div class="card-placeholder">
+                                <span class="placeholder-icon">📷</span>
+                                <span class="placeholder-text">INSERT IMAGE</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">Black 12-Pack</h3>
+                            <span class="color-badge color-badge-black">Black</span>
+                            <p class="card-description">
+                                Twelve premium black stickers. Sleek, stealthy 
+                                look for light-colored surfaces. Subtle but 
+                                unmistakable BIKFAM style.
+                            </p>
+                            <!-- PRICE: Replace this placeholder with your actual price -->
+                            <div class="card-price">
+                                <span class="price-placeholder">INSERT PRICE</span>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary btn-sm btn-add-cart"
+                                    data-id="black-pack"
+                                    data-name="Black 12-Pack"
+                                    data-price="0"       <!-- change 0 to your price, e.g. 24.99 -->
+                                    data-image="🖤">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <!-- Link to custom builder -->
+                <div style="text-align: center; margin-top: var(--space-xl);">
+                    <p class="subheading" style="margin-bottom: var(--space-md);">
+                        Want something different?
+                    </p>
+                    <a href="build.html" class="btn btn-outline btn-lg">
+                        Build Your Own 12-Pack →
+                    </a>
+                </div>
+                
+            </div>
+        </section>
+
+
+        <!-- ============================================================
+             STORY / ABOUT SECTION
+             ============================================================ -->
+        
+        <section class="section story-section">
+            <div class="container">
+                
+                <div class="story-content">
+                    
+                    <h2 class="section-title">What is BIKFAM?</h2>
+                    <p class="subheading">More than just stickers</p>
+                    
+                    <p>
+                        BIKFAM is the community built around <strong>CJBIK</strong>'s YouTube channel. 
+                        We're riders, builders, and enthusiasts who live for the ride — 
+                        whether that's on an e-bike, a motorcycle, or pushing pedals 
+                        up a mountain trail.
+                    </p>
+                    <p>
+                        These stickers are our way of bringing the community together. 
+                        Slap one on your gear and you're instantly part of the fam. 
+                        Spot another BIKFAM sticker in the wild? That's your people.
+                    </p>
+                    <p>
+                        <a href="#" target="_blank" style="font-family: var(--font-heading); text-transform: uppercase; font-size: 1.2rem;">
+                            Subscribe to CJBIK on YouTube →
+                        </a>
+                        <!-- ^^^ Replace the href="#" with the actual YouTube channel URL:
+                             href="https://youtube.com/@cjbik" -->
+                    </p>
+                    
+                </div>
+                
+            </div>
+        </section>
+
+
+        <!-- ============================================================
+             COMMUNITY / SOCIAL LINKS
+             ============================================================ -->
+        
+        <section class="section">
+            <div class="container">
+                
+                <div class="section-header">
+                    <h2 class="section-title">Join the Fam</h2>
+                    <p class="subheading">Follow CJBIK and the BIKFAM community</p>
+                </div>
+                
+                <div class="social-links">
+                    
+                    <!-- SOCIAL LINKS - Replace the href="#" values with your
+                         actual social media profile URLs -->
+                    
+                    <a href="#" class="social-link" target="_blank">
+                        ▶️ YouTube
+                    </a>
+                    
+                    <a href="#" class="social-link" target="_blank">
+                        📸 Instagram
+                    </a>
+                    
+                    <a href="#" class="social-link" target="_blank">
+                        🐦 Twitter / X
+                    </a>
+                    
+                    <a href="#" class="social-link" target="_blank">
+                        💬 Discord
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- ============================================================
+         FOOTER
+         ============================================================ -->
+    
+    <footer class="site-footer">
+        <div class="container">
+            
+            <div class="footer-grid">
+                
+                <!-- Brand column -->
+                <div>
+                    <div class="footer-brand">
+                        <span class="brand-red">BIK</span>FAM
+                    </div>
+                    <p class="footer-description">
+                        Official sticker shop for the CJBIK YouTube channel. 
+                        Ride wild, rep the fam.
+                    </p>
+                </div>
+                
+                <!-- Quick links -->
+                <div>
+                    <h4 class="footer-heading">Shop</h4>
+                    <ul class="footer-links">
+                        <li><a href="shop.html">Pre-Made Packs</a></li>
+                        <li><a href="build.html">Custom 12-Pack</a></li>
+                        <li><a href="cart.html">Cart</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Support / Info -->
+                <div>
+                    <h4 class="footer-heading">Info</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Shipping Info</a></li>
+                        <!-- ^^^ Replace with actual shipping page or section -->
+                        <li><a href="#">Contact</a></li>
+                        <!-- ^^^ Replace with contact page or email -->
+                        <li><a href="#">FAQ</a></li>
+                        <!-- ^^^ Replace with FAQ page -->
+                    </ul>
+                </div>
+                
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 BIKFAM / CJBIK. All rights reserved. | 
+                   This is a fan-made merch store for the CJBIK community.</p>
+            </div>
+            
+        </div>
+    </footer>
+
+
+    <!-- ======== JAVASCRIPT ======== -->
+    <script src="js/main.js"></script>
+
+</body>
 </html>
-

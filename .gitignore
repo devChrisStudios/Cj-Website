@@ -1,0 +1,20 @@
+# BIKFAM Sticker Shop - .gitignore
+# Files and folders that should NOT be committed to Git
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project files (if any)
+node_modules/
+.env
+
+# Image source files (keep only optimized web versions)
+images/*.psd
+images/*.ai

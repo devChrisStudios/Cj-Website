@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<!-- ============================================================
+     BIKFAM STICKER SHOP - Shop Page
+     ============================================================
+     This page shows the pre-made stick packs available for purchase.
+     
+     There are two options:
+     1. White 12-Pack - White stickers on premium vinyl
+     2. Black 12-Pack - Black stickers on premium vinyl
+     
+     Each pack has an "Add to Cart" button that uses data-*
+     attributes to pass product info to the cart system in main.js.
+     
+     THINGS TO CUSTOMIZE:
+     1. Replace the placeholder images with real product photos
+     2. Set the actual prices (search for "change 0 to your price")
+     3. Update the pack contents list if needed
+     ============================================================ -->
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Shop BIKFAM sticker packs - White and Black 12-packs of premium vinyl stickers.">
+    <title>Shop — BIKFAM Stickers</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Permanent+Marker&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="shop">
+
+    <!-- ======== HEADER ======== -->
+    <header class="site-header">
+        <div class="header-inner">
+            
+            <a href="index.html" class="logo">
+                <span class="logo-red">BIK</span>FAM
+            </a>
+            
+            <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+            
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="shop.html" class="active">Shop</a>
+                <a href="build.html">Custom Pack</a>
+                <a href="cart.html" class="cart-link">
+                    Cart
+                    <span class="cart-count">0</span>
+                </a>
+            </nav>
+            
+        </div>
+    </header>
+
+
+    <!-- ======== MAIN CONTENT ======== -->
+    <main class="main-content">
+        
+        <div class="container">
+            
+            <!-- PAGE HEADER -->
+            <div class="section-header">
+                <h1 class="section-title">Sticker Packs</h1>
+                <p class="subheading">Pre-made 12-packs, ready to ship</p>
+            </div>
+            
+            <!-- SHOP GRID -->
+            <div class="shop-grid">
+                
+                <!-- ============================================================
+                     WHITE 12-PACK
+                     ============================================================ -->
+                <div class="card">
+                    <div class="card-image">
+                        <!-- 
+                             IMAGE: Replace this placeholder with:
+                             <img src="images/white-pack.jpg" alt="White 12-Pack">
+                        -->
+                        <div class="card-placeholder">
+                            <span class="placeholder-icon">📷</span>
+                            <span class="placeholder-text">INSERT IMAGE</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        
+                        <h2 class="card-title">White 12-Pack</h2>
+                        <span class="color-badge color-badge-white">White Stickers</span>
+                        
+                        <p class="card-description">
+                            Twelve high-quality white vinyl stickers. These look 
+                            amazing on dark surfaces — helmets, bike frames, 
+                            laptops, toolboxes, you name it. Each sticker is 
+                            weather-resistant and built to last through mud, 
+                            rain, and road grime.
+                        </p>
+                        
+                        <!-- PACK CONTENTS LIST -->
+                        <ul class="pack-contents">
+                            <li>12x White vinyl stickers (various designs)</li>
+                            <li>Weather-resistant laminate</li>
+                            <li>Each sticker approx. 3" × 3"</li>
+                        </ul>
+                        
+                        <!-- PRICE: Replace this placeholder with your actual price.
+                             Example: <span class="card-price">$24.99</span> -->
+                        <div class="card-price">
+                            <span class="price-placeholder">INSERT PRICE</span>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="card-footer">
+                        <button class="btn btn-primary btn-add-cart"
+                                data-id="white-pack"
+                                data-name="White 12-Pack"
+                                data-price="0"       <!-- change 0 to your price, e.g. 24.99 -->
+                                data-image="🤍">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+                
+                
+                <!-- ============================================================
+                     BLACK 12-PACK
+                     ============================================================ -->
+                <div class="card">
+                    <div class="card-image">
+                        <!-- 
+                             IMAGE: Replace this placeholder with:
+                             <img src="images/black-pack.jpg" alt="Black 12-Pack">
+                        -->
+                        <div class="card-placeholder">
+                            <span class="placeholder-icon">📷</span>
+                            <span class="placeholder-text">INSERT IMAGE</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        
+                        <h2 class="card-title">Black 12-Pack</h2>
+                        <span class="color-badge color-badge-black">Black Stickers</span>
+                        
+                        <p class="card-description">
+                            Twelve premium black vinyl stickers with a matte 
+                            finish. Stealthy, sleek, and perfect for light-colored 
+                            surfaces. Same durable construction as our white 
+                            stickers — just with a darker attitude.
+                        </p>
+                        
+                        <ul class="pack-contents">
+                            <li>12x Black vinyl stickers (various designs)</li>
+                            <li>Weather-resistant laminate</li>
+                            <li>Each sticker approx. 3" × 3"</li>
+                        </ul>
+                        
+                        <!-- PRICE: Replace this placeholder with your actual price -->
+                        <div class="card-price">
+                            <span class="price-placeholder">INSERT PRICE</span>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="card-footer">
+                        <button class="btn btn-primary btn-add-cart"
+                                data-id="black-pack"
+                                data-name="Black 12-Pack"
+                                data-price="0"       <!-- change 0 to your price, e.g. 24.99 -->
+                                data-image="🖤">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+                
+            </div>
+            
+            
+            <!-- ============================================================
+                 CUSTOM PACK PROMO
+                 ============================================================ -->
+            <div style="text-align: center; margin-top: var(--space-xl); padding: var(--space-xl); border-top: 1px solid #222;">
+                
+                <h2 style="font-size: 2rem; margin-bottom: var(--space-sm);">
+                    Want to Mix &amp; Match?
+                </h2>
+                <p class="subheading">
+                    Build your own 12-pack with exactly the designs you want
+                </p>
+                <a href="build.html" class="btn btn-outline btn-lg" style="margin-top: var(--space-md);">
+                    Build Your Own Pack →
+                </a>
+                
+            </div>
+            
+        </div>
+        
+    </main>
+
+
+    <!-- ======== FOOTER ======== -->
+    <footer class="site-footer">
+        <div class="container">
+            
+            <div class="footer-grid">
+                
+                <div>
+                    <div class="footer-brand">
+                        <span class="brand-red">BIK</span>FAM
+                    </div>
+                    <p class="footer-description">
+                        Official sticker shop for the CJBIK YouTube channel. 
+                        Ride wild, rep the fam.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Shop</h4>
+                    <ul class="footer-links">
+                        <li><a href="shop.html">Pre-Made Packs</a></li>
+                        <li><a href="build.html">Custom 12-Pack</a></li>
+                        <li><a href="cart.html">Cart</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-heading">Info</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 BIKFAM / CJBIK. All rights reserved.</p>
+            </div>
+            
+        </div>
+    </footer>
+
+
+    <script src="js/main.js"></script>
+
+</body>
+</html>
