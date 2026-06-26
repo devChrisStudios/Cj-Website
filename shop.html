@@ -4,24 +4,23 @@
      ============================================================
      This page shows the pre-made stick packs available for purchase.
      
-     There are two options:
-     1. White 12-Pack - White stickers on premium vinyl
-     2. Black 12-Pack - Black stickers on premium vinyl
+     There are three pack options:
+     1. Standard Pack - 6 White + 6 Black stickers
+     2. White 12-Pack - All white stickers
+     3. Black 12-Pack - All black stickers
+     
+     Below the packs is a Custom Decal option where users can
+     design on an external site, paste the URL, and add to cart.
      
      Each pack has an "Add to Cart" button that uses data-*
      attributes to pass product info to the cart system in main.js.
-     
-     THINGS TO CUSTOMIZE:
-     1. Replace the placeholder images with real product photos
-     2. Set the actual prices (search for "change 0 to your price")
-     3. Update the pack contents list if needed
      ============================================================ -->
 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Shop BIKFAM sticker packs - White and Black 12-packs of premium vinyl stickers.">
+    <meta name="description" content="Shop BIKFAM sticker packs - Standard, White, and Black 12-packs of premium vinyl stickers.">
     <title>Shop — BIKFAM Stickers</title>
     
     <!-- Google Fonts -->
@@ -68,146 +67,160 @@
                 <p class="subheading">Pre-made 12-packs, ready to ship</p>
             </div>
             
-            <!-- SHOP GRID -->
-            <div class="shop-grid">
-                
-                <!-- ============================================================
-                     WHITE 12-PACK
-                     ============================================================ -->
+            <!-- PACKS GRID - 3 columns: Standard / White / Black -->
+            <div class="packs-grid-3">
+
+                <!-- ======== STANDARD PACK (6 White + 6 Black) ======== -->
                 <div class="card">
                     <div class="card-image">
-                        <!-- 
-                             IMAGE: Replace this placeholder with:
-                             <img src="images/white-pack.jpg" alt="White 12-Pack">
-                        -->
                         <div class="card-placeholder">
                             <span class="placeholder-icon">📷</span>
                             <span class="placeholder-text">INSERT IMAGE</span>
                         </div>
                     </div>
-                    
                     <div class="card-body">
-                        
-                        <h2 class="card-title">White 12-Pack</h2>
-                        <span class="color-badge color-badge-white">White Stickers</span>
-                        
+                        <h2 class="card-title">Standard Pack</h2>
+                        <span class="color-badge color-badge-white">Mixed — 6 White + 6 Black</span>
                         <p class="card-description">
-                            Twelve high-quality white vinyl stickers. These look 
-                            amazing on dark surfaces — helmets, bike frames, 
-                            laptops, toolboxes, you name it. Each sticker is 
-                            weather-resistant and built to last through mud, 
-                            rain, and road grime.
+                            The best of both worlds — six white stickers and six black
+                            stickers in one 12-pack. Covers light and dark surfaces.
+                            Weather-resistant and built to last.
                         </p>
-                        
-                        <!-- PACK CONTENTS LIST -->
                         <ul class="pack-contents">
-                            <li>12x White vinyl stickers (various designs)</li>
+                            <li>6x White vinyl stickers (various designs)</li>
+                            <li>6x Black vinyl stickers (various designs)</li>
                             <li>Weather-resistant laminate</li>
                             <li>Each sticker approx. 3" × 3"</li>
                         </ul>
-                        
-                        <!-- PRICE: Replace this placeholder with your actual price.
-                             Example: <span class="card-price">$24.99</span> -->
                         <div class="card-price">
                             <span class="price-placeholder">INSERT PRICE</span>
                         </div>
-                        
                     </div>
-                    
                     <div class="card-footer">
                         <button class="btn btn-primary btn-add-cart"
-                                data-id="white-pack"
-                                data-name="White 12-Pack"
-                                data-price="0">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
-                
-                
-                <!-- ============================================================
-                     BLACK 12-PACK
-                     ============================================================ -->
-                <div class="card">
-                    <div class="card-image">
-                        <!-- 
-                             IMAGE: Replace this placeholder with:
-                             <img src="images/black-pack.jpg" alt="Black 12-Pack">
-                        -->
-                        <div class="card-placeholder">
-                            <span class="placeholder-icon">📷</span>
-                            <span class="placeholder-text">INSERT IMAGE</span>
-                        </div>
-                    </div>
-                    
-                    <div class="card-body">
-                        
-                        <h2 class="card-title">Black 12-Pack</h2>
-                        <span class="color-badge color-badge-black">Black Stickers</span>
-                        
-                        <p class="card-description">
-                            Twelve premium black vinyl stickers with a matte 
-                            finish. Stealthy, sleek, and perfect for light-colored 
-                            surfaces. Same durable construction as our white 
-                            stickers — just with a darker attitude.
-                        </p>
-                        
-                        <ul class="pack-contents">
-                            <li>12x Black vinyl stickers (various designs)</li>
-                            <li>Weather-resistant laminate</li>
-                            <li>Each sticker approx. 3" × 3"</li>
-                        </ul>
-                        
-                        <!-- PRICE: Replace this placeholder with your actual price -->
-                        <div class="card-price">
-                            <span class="price-placeholder">INSERT PRICE</span>
-                        </div>
-                        
-                    </div>
-                    
-                    <div class="card-footer">
-                        <button class="btn btn-primary btn-add-cart"
-                                data-id="black-pack"
-                                data-name="Black 12-Pack"
-                                data-price="0">
+                                data-id="standard-pack"
+                                data-name="Standard Pack"
+                                data-price="0"
+                                data-image="📦">
                             Add to Cart
                         </button>
                     </div>
                 </div>
 
-								<div class="card fade-in fade-in-delay-1">
-										<div class="card-body">
-												<h3 class="card-title">Custom Sticker</h3>
-												<span class="color-badge color-badge-white">Custom</span>
-												<p class="card-description">
-														
-												</p>
-												<!-- PRICE: Replace this placeholder with your actual price -->
-												<div class="card-price">
-														<span class="price-placeholder">INSERT PRICE</span>
-												</div>
-										</div>
-										<div class="card-footer">
-												<!-- DATA ATTRIBUTES explained:
-														 data-id    = unique identifier for this product
-														 data-name  = display name
-														 data-price = price (must be a number)
-														 data-image = emoji/image placeholder -->
-												<button class="btn btn-primary btn-sm btn-add-cart"
-																data-id="custom-sticker"
-																data-name="Custom Sticker"
-																data-price="0">
-														Add to Cart
-												</button>
-										</div>
-								</div>
+                <!-- ======== WHITE 12-PACK ======== -->
+                <div class="card">
+                    <div class="card-image">
+                        <div class="card-placeholder">
+                            <span class="placeholder-icon">📷</span>
+                            <span class="placeholder-text">INSERT IMAGE</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="card-title">White 12-Pack</h2>
+                        <span class="color-badge color-badge-white">White Stickers</span>
+                        <p class="card-description">
+                            Twelve high-quality white vinyl stickers. These look
+                            amazing on dark surfaces — helmets, bike frames,
+                            laptops, toolboxes, you name it.
+                        </p>
+                        <ul class="pack-contents">
+                            <li>12x White vinyl stickers (various designs)</li>
+                            <li>Weather-resistant laminate</li>
+                            <li>Each sticker approx. 3" × 3"</li>
+                        </ul>
+                        <div class="card-price">
+                            <span class="price-placeholder">INSERT PRICE</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary btn-add-cart"
+                                data-id="white-pack"
+                                data-name="White 12-Pack"
+                                data-price="0"
+                                data-image="🤍">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
                 
+                <!-- ======== BLACK 12-PACK ======== -->
+                <div class="card">
+                    <div class="card-image">
+                        <div class="card-placeholder">
+                            <span class="placeholder-icon">📷</span>
+                            <span class="placeholder-text">INSERT IMAGE</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="card-title">Black 12-Pack</h2>
+                        <span class="color-badge color-badge-black">Black Stickers</span>
+                        <p class="card-description">
+                            Twelve premium black vinyl stickers with a matte
+                            finish. Sleek, stealthy, and perfect for light-colored
+                            surfaces. Same durable construction.
+                        </p>
+                        <ul class="pack-contents">
+                            <li>12x Black vinyl stickers (various designs)</li>
+                            <li>Weather-resistant laminate</li>
+                            <li>Each sticker approx. 3" × 3"</li>
+                        </ul>
+                        <div class="card-price">
+                            <span class="price-placeholder">INSERT PRICE</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary btn-add-cart"
+                                data-id="black-pack"
+                                data-name="Black 12-Pack"
+                                data-price="0"
+                                data-image="🖤">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ======== CUSTOM DECAL (full-width, centered) ======== -->
+            <div class="custom-pack-row">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">Custom Decal</h2>
+                        <span class="color-badge color-badge-white">Custom</span>
+                        <p class="card-description">
+                            Design your own sticker on Motocutz, then paste the link here.
+                        </p>
+                        <div class="card-price">
+                            <span class="price-placeholder">INSERT PRICE</span>
+                        </div>
+                        <div class="custom-url-group">
+                            <input type="url" class="custom-url-input"
+                                   placeholder="Paste your design URL here..."
+                                   autocomplete="off">
+                            <a href="https://motocutzmx.com/products/custom-og-motocutz-number-plate-decal"
+                               target="_blank" rel="noopener"
+                               class="btn btn-outline btn-sm btn-design-link">
+                                Design Custom Art →
+                            </a>
+                        </div>
+                        <div class="custom-url-status"></div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary btn-add-cart btn-custom-cart"
+                                data-id="custom-decal"
+                                data-name="Custom Decal"
+                                data-price="0"
+                                data-image="🎨"
+                                data-custom="true">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
             </div>
             
-            
-            <!-- ============================================================
-                 CUSTOM PACK PROMO
-                 ============================================================ -->
+            <!-- Custom pack builder promo -->
             <div style="text-align: center; margin-top: var(--space-xl); padding: var(--space-xl); border-top: 1px solid #222;">
                 
                 <h2 style="font-size: 2rem; margin-bottom: var(--space-sm);">

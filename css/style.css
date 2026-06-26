@@ -687,13 +687,83 @@ p {
    9. PAGE - HOME
    ============================================================ */
 
-/* Featured products section on home */
-.featured-grid {
+/* 3-column grid for Standard / White / Black pack cards */
+.packs-grid-3 {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--space-lg);
-    max-width: 800px;
+    max-width: 1100px;
     margin: 0 auto;
+}
+
+/* Full-width row for the Custom Decal card (below the 3 packs) */
+.custom-pack-row {
+    max-width: 700px;
+    margin: var(--space-xl) auto 0;
+}
+
+.custom-pack-row .card {
+    text-align: center;
+}
+
+.custom-pack-row .card-body {
+    padding-bottom: var(--space-sm);
+}
+
+/* URL input group for the custom decal design link */
+.custom-url-group {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: center;
+    max-width: 550px;
+    margin: var(--space-md) auto 0;
+}
+
+.custom-url-group input[type="url"] {
+    flex: 1;
+    background: var(--color-bg);
+    border: 1px solid #333;
+    color: var(--color-text);
+    padding: var(--space-sm) var(--space-md);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    border-radius: var(--border-radius);
+    outline: none;
+    transition: border-color 0.2s;
+    min-width: 0;
+}
+
+.custom-url-group input[type="url"]:focus {
+    border-color: var(--color-red-primary);
+}
+
+.custom-url-group input[type="url"]:invalid:not(:placeholder-shown) {
+    border-color: #c0392b;
+}
+
+.custom-url-group input[type="url"]::placeholder {
+    color: #555;
+}
+
+/* Button that opens the external design site */
+.btn-design-link {
+    white-space: nowrap;
+}
+
+/* Status message for custom URL input */
+.custom-url-status {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin-top: var(--space-xs);
+    min-height: 1.2em;
+}
+
+.custom-url-status.success {
+    color: #27ae60;
+}
+
+.custom-url-status.error {
+    color: var(--color-red-primary);
 }
 
 /* About / story section on home */
@@ -1277,7 +1347,7 @@ p {
     .grid-2, .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
     
     .shop-grid,
-    .featured-grid { grid-template-columns: 1fr; }
+    .packs-grid-3 { grid-template-columns: 1fr; }
     
     .builder-layout {
         grid-template-columns: 1fr;
@@ -1353,9 +1423,18 @@ p {
         grid-template-columns: 1fr;
     }
     
-    .featured-grid { grid-template-columns: 1fr; }
+    .packs-grid-3 { grid-template-columns: 1fr; }
     .shop-grid { grid-template-columns: 1fr; }
     .sticker-grid { grid-template-columns: repeat(2, 1fr); }
+    
+    .custom-url-group {
+        flex-direction: column;
+    }
+    
+    .btn-design-link {
+        width: 100%;
+        text-align: center;
+    }
     
     .footer-grid {
         grid-template-columns: 1fr;

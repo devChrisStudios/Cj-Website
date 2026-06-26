@@ -186,13 +186,39 @@
                     <p class="subheading">Our most popular options</p>
                 </div>
                 
-                <div class="featured-grid">
+                <div class="packs-grid-3">
                     
-                    <!-- ======== WHITE 12-PACK CARD ======== -->
-                    <!-- 
-                         IMAGE: Replace the placeholder below with:
-                         <img src="images/white-pack.jpg" alt="White 12-Pack">
-                    -->
+                    <!-- ======== STANDARD PACK (6 White + 6 Black) ======== -->
+                    <div class="card fade-in fade-in-delay-2">
+                        <div class="card-image">
+                            <div class="card-placeholder">
+                                <span class="placeholder-icon">📷</span>
+                                <span class="placeholder-text">INSERT IMAGE</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">Standard Pack</h3>
+                            <span class="color-badge color-badge-white">Mixed</span>
+                            <p class="card-description">
+                                The best of both worlds — six white stickers and six black
+                                stickers in one 12-pack. Perfect for any surface, any style.
+                            </p>
+                            <div class="card-price">
+                                <span class="price-placeholder">INSERT PRICE</span>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary btn-sm btn-add-cart"
+                                    data-id="standard-pack"
+                                    data-name="Standard Pack"
+                                    data-price="0"
+                                    data-image="📦">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ======== WHITE 12-PACK ======== -->
                     <div class="card fade-in fade-in-delay-1">
                         <div class="card-image">
                             <div class="card-placeholder">
@@ -204,35 +230,26 @@
                             <h3 class="card-title">White 12-Pack</h3>
                             <span class="color-badge color-badge-white">White</span>
                             <p class="card-description">
-                                Twelve premium white stickers. Perfect for dark 
-                                surfaces like helmets, bikes, and laptops. 
+                                Twelve premium white stickers. Perfect for dark
+                                surfaces like helmets, bikes, and laptops.
                                 Clean look that stands out.
                             </p>
-                            <!-- PRICE: Replace this placeholder with your actual price -->
                             <div class="card-price">
                                 <span class="price-placeholder">INSERT PRICE</span>
                             </div>
                         </div>
                         <div class="card-footer">
-                            <!-- DATA ATTRIBUTES explained:
-                                 data-id    = unique identifier for this product
-                                 data-name  = display name
-                                 data-price = price (must be a number)
-                                 data-image = emoji/image placeholder -->
                             <button class="btn btn-primary btn-sm btn-add-cart"
                                     data-id="white-pack"
                                     data-name="White 12-Pack"
-                                    data-price="0">
+                                    data-price="0"
+                                    data-image="🤍">
                                 Add to Cart
                             </button>
                         </div>
                     </div>
                     
-                    <!-- ======== BLACK 12-PACK CARD ======== -->
-                    <!-- 
-                         IMAGE: Replace the placeholder below with:
-                         <img src="images/black-pack.jpg" alt="Black 12-Pack">
-                    -->
+                    <!-- ======== BLACK 12-PACK ======== -->
                     <div class="card fade-in fade-in-delay-2">
                         <div class="card-image">
                             <div class="card-placeholder">
@@ -244,11 +261,10 @@
                             <h3 class="card-title">Black 12-Pack</h3>
                             <span class="color-badge color-badge-black">Black</span>
                             <p class="card-description">
-                                Twelve premium black stickers. Sleek, stealthy 
-                                look for light-colored surfaces. Subtle but 
+                                Twelve premium black stickers. Sleek, stealthy
+                                look for light-colored surfaces. Subtle but
                                 unmistakable BIKFAM style.
                             </p>
-                            <!-- PRICE: Replace this placeholder with your actual price -->
                             <div class="card-price">
                                 <span class="price-placeholder">INSERT PRICE</span>
                             </div>
@@ -257,39 +273,55 @@
                             <button class="btn btn-primary btn-sm btn-add-cart"
                                     data-id="black-pack"
                                     data-name="Black 12-Pack"
-                                    data-price="0">
+                                    data-price="0"
+                                    data-image="🖤">
                                 Add to Cart
                             </button>
                         </div>
                     </div>
 
+                </div>
+
+                <!-- ======== CUSTOM DECAL (full-width, centered) ======== -->
+                <div class="custom-pack-row">
+
                     <div class="card fade-in fade-in-delay-1">
                         <div class="card-body">
-                            <h3 class="card-title">Custom Sticker</h3>
+                            <h3 class="card-title">Custom Decal</h3>
                             <span class="color-badge color-badge-white">Custom</span>
                             <p class="card-description">
-																
+                                Design your own sticker on Motocutz, then paste the link here.
                             </p>
-                            <!-- PRICE: Replace this placeholder with your actual price -->
+
                             <div class="card-price">
                                 <span class="price-placeholder">INSERT PRICE</span>
                             </div>
+
+                            <!-- URL input group -->
+                            <div class="custom-url-group">
+                                <input type="url" class="custom-url-input"
+                                       placeholder="Paste your design URL here..."
+                                       autocomplete="off">
+                                <a href="https://motocutzmx.com/products/custom-og-motocutz-number-plate-decal"
+                                   target="_blank" rel="noopener"
+                                   class="btn btn-outline btn-sm btn-design-link">
+                                    Design Custom Art →
+                                </a>
+                            </div>
+                            <div class="custom-url-status"></div>
                         </div>
                         <div class="card-footer">
-                            <!-- DATA ATTRIBUTES explained:
-                                 data-id    = unique identifier for this product
-                                 data-name  = display name
-                                 data-price = price (must be a number)
-                                 data-image = emoji/image placeholder -->
-                            <button class="btn btn-primary btn-sm btn-add-cart"
-                                    data-id="custom-sticker"
-                                    data-name="Custom Sticker"
-                                    data-price="0">
+                            <button class="btn btn-primary btn-add-cart btn-custom-cart"
+                                    data-id="custom-decal"
+                                    data-name="Custom Decal"
+                                    data-price="0"
+                                    data-image="🎨"
+                                    data-custom="true">
                                 Add to Cart
                             </button>
                         </div>
                     </div>
-                    
+
                 </div>
                 
                 <!-- Link to custom builder -->

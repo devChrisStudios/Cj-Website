@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const page = document.body.dataset.page;
     
-    if (page === 'shop') {
+    if (page === 'shop' || page === 'home') {
         initShopPage();
     } else if (page === 'builder') {
         // Builder has its own JS file - that's init'd separately
@@ -337,6 +337,24 @@ function initShopPage() {
                 type: 'premade'
             };
             
+            // If this is a custom decal button, grab the design URL from the input
+            if (button.dataset.custom === 'true') {
+                const input = button.closest('.card').querySelector('.custom-url-input');
+                const statusEl = button.closest('.card').querySelector('.custom-url-status');
+                const url = input ? input.value.trim() : '';
+                
+                if (!url) {
+                    statusEl.textContent = 'Please paste your design URL first.';
+                    statusEl.className = 'custom-url-status error';
+                    return;
+                }
+                
+                item.type = 'custom';
+                item.designUrl = url;
+                statusEl.textContent = '✓ Design URL saved!';
+                statusEl.className = 'custom-url-status success';
+            }
+            
             addToCart(item);
         });
     });
@@ -409,6 +427,12 @@ function initCartPage() {
             extraDetail = '<div class="item-detail" style="font-size: 0.75rem; margin-top: 4px; color: #666;">' +
                           item.stickers.join(', ') +
                           '</div>';
+        }
+        // For custom decals, show the design URL
+        if (item.type === 'custom' && item.designUrl) {
+            extraDetail = '<div class="item-detail" style="font-size: 0.75rem; margin-top: 4px; word-break: break-all;">' +
+                          'Design URL: <a href="' + item.designUrl + '" target="_blank" rel="noopener" style="color: var(--color-red-primary);">' +
+                          item.designUrl + '</a></div>';
         }
         
         itemEl.innerHTML = [
