@@ -1,5 +1,0 @@
-# Cloudflare Pages Redirects
-# Clean URLs — /shop serves shop.html, etc.
-/shop   /shop.html  301
-/build  /build.html  301
-/cart   /cart.html  301
