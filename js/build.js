@@ -233,7 +233,7 @@ const STICKERS = [
 const MAX_PACK_SIZE = 12;
 
 // Price for a custom 12-pack — change 0 to your actual price
-const PACK_PRICE = 0; // <<<--- SET YOUR PRICE (e.g. 24.99)
+const PACK_PRICE = 11.99;
 
 
 
