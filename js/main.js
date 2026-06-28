@@ -146,7 +146,7 @@ function getCartTotal() {
     let total = 0;
     
     cart.forEach(function(item) {
-        var price = parseFloat(item.price) || 0;
+        const price = parseFloat(item.price) || 0;
         total += price * (item.quantity || 1);
     });
     
@@ -392,7 +392,7 @@ function initCartPage() {
     
     if (!cartContainer) return;
     
-    var params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(window.location.search);
     if (params.get('session_id')) {
         if (cartSuccess) cartSuccess.style.display = 'block';
         if (cartLayout) cartLayout.style.display = 'none';
@@ -411,7 +411,7 @@ function initCartPage() {
     if (cart.length === 0) {
         cartEmpty.style.display = 'block';
         cartHasItems.style.display = 'none';
-        cartSummary.style.display = 'none';
+        if (cartSummary) cartSummary.style.display = 'none';
         if (checkoutBtn) checkoutBtn.disabled = true;
         return;
     }
@@ -419,13 +419,12 @@ function initCartPage() {
     // We have items - show them
     cartEmpty.style.display = 'none';
     cartHasItems.style.display = 'block';
-    cartSummary.style.display = 'block';
+    if (cartSummary) cartSummary.style.display = 'block';
     
     // --- Clear Cart button ---
-    var clearBtn = document.getElementById('clear-cart-btn');
+    const clearBtn = document.getElementById('clear-cart-btn');
     if (clearBtn) {
-        // Remove any old listener to avoid duplicates if re-initialized
-        var newClearBtn = clearBtn.cloneNode(true);
+        const newClearBtn = clearBtn.cloneNode(true);
         clearBtn.parentNode.replaceChild(newClearBtn, clearBtn);
         newClearBtn.addEventListener('click', function() {
             if (confirm('Clear your entire cart?')) {
@@ -449,27 +448,27 @@ function initCartPage() {
         
         const itemTotal = (item.price || 0) * (item.quantity || 1);
         
-        var extraDetail = '';
+        let extraDetail = '';
         if (item.type === 'custom' && item.stickers && item.stickers.length > 0) {
-            extraDetail = '<div class="item-detail" style="font-size: 0.75rem; margin-top: 4px; color: #666;">' +
+            extraDetail += '<div class="item-detail" style="font-size: 0.75rem; margin-top: 4px; color: #666;">' +
                           item.stickers.join(', ') +
                           '</div>';
         }
         if (item.type === 'custom' && item.imageId) {
-            extraDetail = '<div class="item-detail" style="font-size: 0.75rem; margin-top: 4px; color: #666;">' +
+            extraDetail += '<div class="item-detail" style="font-size: 0.75rem; margin-top: 4px; color: #666;">' +
                           'Custom design uploaded' +
                           '</div>';
         }
         if (item.type === 'decal' && item.handle) {
-            extraDetail = '<div class="item-detail" style="font-size: 0.75rem; margin-top: 4px; color: #666;">' +
+            extraDetail += '<div class="item-detail" style="font-size: 0.75rem; margin-top: 4px; color: #666;">' +
                           'Handle: ' + item.handle +
                           '</div>';
         }
         
-        var imgSrc = item.image || '📦';
-        var isEmoji = imgSrc.length <= 2;
+        const imgSrc = item.image || '📦';
+        const isPath = imgSrc.indexOf('/') !== -1 || imgSrc.indexOf('.') !== -1;
         itemEl.innerHTML = [
-            '<div class="cart-item-image">' + (isEmoji ? '<span style="font-size:2rem;">' + imgSrc + '</span>' : '<img src="' + imgSrc + '" alt="' + item.name + '">') + '</div>',
+            '<div class="cart-item-image">' + (isPath ? '<img src="' + imgSrc + '" alt="' + item.name + '">' : '<span style="font-size:2rem;">' + imgSrc + '</span>') + '</div>',
             '<div class="cart-item-info">',
             '  <h4>' + item.name + '</h4>',
             '  <div class="item-detail">' + formatPrice(item.price) + ' each</div>',
@@ -501,7 +500,7 @@ function initCartPage() {
                 if (getCart().length === 0) {
                     cartEmpty.style.display = 'block';
                     cartHasItems.style.display = 'none';
-                    cartSummary.style.display = 'none';
+                    if (cartSummary) cartSummary.style.display = 'none';
                 }
                 updateCartSummary();
                 return;
@@ -528,7 +527,7 @@ function initCartPage() {
             if (getCart().length === 0) {
                 cartEmpty.style.display = 'block';
                 cartHasItems.style.display = 'none';
-                cartSummary.style.display = 'none';
+                if (cartSummary) cartSummary.style.display = 'none';
             }
             updateCartSummary();
         });
@@ -540,7 +539,9 @@ function initCartPage() {
     // Enable and wire checkout button
     if (checkoutBtn) {
         checkoutBtn.disabled = false;
-        checkoutBtn.addEventListener('click', function() {
+        const newCheckoutBtn = checkoutBtn.cloneNode(true);
+        checkoutBtn.parentNode.replaceChild(newCheckoutBtn, checkoutBtn);
+        newCheckoutBtn.addEventListener('click', function() {
             checkout();
         });
     }
@@ -549,10 +550,10 @@ function initCartPage() {
 
 
 function checkout() {
-    var cart = getCart();
+    const cart = getCart();
     if (cart.length === 0) return;
 
-    var checkoutBtn = document.getElementById('checkout-btn');
+    const checkoutBtn = document.getElementById('checkout-btn');
     if (checkoutBtn) {
         checkoutBtn.disabled = true;
         checkoutBtn.textContent = 'Redirecting to Stripe...';

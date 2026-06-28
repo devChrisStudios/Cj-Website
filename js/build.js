@@ -51,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (page !== 'builder') return;
     
     const grid = document.querySelector('.sticker-grid');
-    const sidebar = document.querySelector('.builder-sidebar');
     
     if (!grid) return;
     
@@ -198,7 +197,7 @@ function updateBuilderUI() {
     if (addToCartBtn) {
         if (selectedStickers.length === MAX_PACK_SIZE) {
             addToCartBtn.disabled = false;
-            var priceDisplay = 'Add to Cart — $' + PACK_PRICE.toFixed(2);
+            const priceDisplay = 'Add to Cart — $' + PACK_PRICE.toFixed(2);
             addToCartBtn.textContent = priceDisplay;
         } else if (selectedStickers.length === 0) {
             addToCartBtn.disabled = true;
