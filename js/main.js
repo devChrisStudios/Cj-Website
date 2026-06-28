@@ -689,7 +689,7 @@ function checkout() {
  */
 function updateCartSummary() {
     const subtotalEl = document.querySelector('.summary-subtotal .amount');
-    const totalEl = document.querySelector('.summary-total .amount');
+    const totalEl = document.querySelector('.total .amount');
     
     if (!subtotalEl) return;
     
