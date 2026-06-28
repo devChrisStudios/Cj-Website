@@ -226,16 +226,176 @@ function showAddedFeedback(itemName) {
 
 
 // ============================================================
+// COLOR HEX MAP
+// ============================================================
+
+const COLOR_HEX = {
+    'White': '#ffffff',
+    'Blue': '#3498db',
+    'Orange': '#e67e22',
+    'Red': '#e74c3c',
+    'Purple': '#9b59b6',
+    'Yellow': '#f1c40f',
+    'Pink': '#e91e63',
+    'Green': '#2ecc71'
+};
+
+
+// ============================================================
+// PRODUCT RENDERERS
+// ============================================================
+
+function renderPackCard(p) {
+    const features = (p.features || []).map(function(f) {
+        return '<li>' + f + '</li>';
+    }).join('');
+    return '<div class="card">' +
+        '<div class="card-image">' +
+        '  <img src="' + p.image + '" alt="' + p.name + '">' +
+        '</div>' +
+        '<div class="card-body">' +
+        '  <h2 class="card-title">' + p.name + '</h2>' +
+        '  <span class="color-badge ' + (p.badgeClass || 'color-badge-white') + '">' + (p.badge || '') + '</span>' +
+        '  <p class="card-description">' + p.description + '</p>' +
+        '  <ul class="pack-contents">' + features + '</ul>' +
+        '  <div class="card-price">' + formatPrice(p.price) + '</div>' +
+        '</div>' +
+        '<div class="card-footer">' +
+        '  <button class="btn btn-primary btn-add-cart"' +
+        '          data-id="' + p.id + '"' +
+        '          data-name="' + p.name + '"' +
+        '          data-price="' + p.price + '"' +
+        '          data-image="' + p.image + '">' +
+        '    Add to Cart' +
+        '  </button>' +
+        '</div>' +
+        '</div>';
+}
+
+function renderDecalCard(p) {
+    const colors = (p.colors || []).map(function(c) {
+        const hex = COLOR_HEX[c] || '#888';
+        const borderStyle = c === 'White' ? 'border-color:#ccc;' : '';
+        const selected = c === 'White' ? ' selected' : '';
+        return '<div class="color-option' + selected + '" data-color="' + c + '" style="background:' + hex + ';' + borderStyle + '" title="' + c + '" aria-label="' + c + '"></div>';
+    }).join('');
+    return '<div class="card">' +
+        '<div class="card-image">' +
+        '  <img src="' + p.baseImage + '" alt="' + p.name + '">' +
+        '</div>' +
+        '<div class="card-body">' +
+        '  <h2 class="card-title">' + p.name + '</h2>' +
+        '  <p class="card-description">' + p.description + '</p>' +
+        '  <div class="card-price">' + formatPrice(p.price) + '</div>' +
+        '  <div class="color-selector" data-target="' + p.id + '" data-prefix="' + (p.imagePrefix || '') + '">' + colors + '</div>' +
+        '  <input type="text" class="decal-handle" placeholder="@yourhandle" value="' + (p.handleDefault || '@cjbik') + '" maxlength="30">' +
+        '</div>' +
+        '<div class="card-footer">' +
+        '  <button class="btn btn-primary btn-add-decal"' +
+        '          data-base-id="' + p.id + '"' +
+        '          data-name="' + p.name + '"' +
+        '          data-price="' + p.price + '"' +
+        '          data-image="' + p.baseImage + '">' +
+        '    Add to Cart' +
+        '  </button>' +
+        '</div>' +
+        '</div>';
+}
+
+function renderCustomDecalCard(p) {
+    return '<div class="card">' +
+        '<div class="card-body">' +
+        '  <h2 class="card-title">' + p.name + '</h2>' +
+        '  <span class="color-badge ' + (p.badgeClass || 'color-badge-white') + '">' + (p.badge || '') + '</span>' +
+        '  <p class="card-description">' + p.description + '</p>' +
+        '  <div class="card-price">' + formatPrice(p.price) + '</div>' +
+        '  <div class="custom-upload-group">' +
+        '    <div class="custom-upload-top-row">' +
+        '      <a href="' + p.designLink + '" target="_blank" rel="noopener" class="btn btn-outline btn-sm btn-design-link">' +
+        '        ' + (p.designLinkText || 'Design on Motocutz →') +
+        '      </a>' +
+        '      <input type="file" class="custom-file-input" accept="image/png,image/jpeg,image/webp">' +
+        '    </div>' +
+        '    <img class="custom-file-preview" style="display:none; border-radius:4px;">' +
+        '    <div class="custom-url-status"></div>' +
+        '  </div>' +
+        '</div>' +
+        '<div class="card-footer">' +
+        '  <button class="btn btn-primary btn-add-cart btn-custom-cart"' +
+        '          data-id="' + p.id + '"' +
+        '          data-name="' + p.name + '"' +
+        '          data-price="' + p.price + '"' +
+        '          data-image="🎨"' +
+        '          data-custom="true">' +
+        '    Add to Cart' +
+        '  </button>' +
+        '</div>' +
+        '</div>';
+}
+
+
+// ============================================================
 // SHOP PAGE (initShopPage)
 // ============================================================
-// Handles the "Add to Cart" buttons on the shop page where
-// users can buy pre-made White or Black 12-Packs.
 
 function initShopPage() {
     
-    const addButtons = document.querySelectorAll('.btn-add-cart');
+    const page = document.body.dataset.page;
+    
+    if (page === 'shop') {
+        const packsContainer = document.getElementById('products-packs');
+        const decalsContainer = document.getElementById('products-decals');
+        const customContainer = document.getElementById('products-custom');
+        
+        if (packsContainer || decalsContainer || customContainer) {
+            fetch('/api/products')
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    const products = data.products || [];
+                    const packs = [];
+                    const decals = [];
+                    const customDecals = [];
+                    
+                    products.forEach(function(p) {
+                        if (p.type === 'pack') packs.push(p);
+                        else if (p.type === 'decal') decals.push(p);
+                        else if (p.type === 'custom-decal') customDecals.push(p);
+                    });
+                    
+                    if (packsContainer) {
+                        packsContainer.innerHTML = packs.map(renderPackCard).join('');
+                    }
+                    if (decalsContainer) {
+                        decalsContainer.innerHTML = decals.map(renderDecalCard).join('');
+                    }
+                    if (customContainer) {
+                        customContainer.innerHTML = customDecals.map(renderCustomDecalCard).join('');
+                    }
+                    
+                    bindShopHandlers();
+                })
+                .catch(function() {
+                    var msg = '<p style="text-align:center;color:#666;grid-column:1/-1">Failed to load products. Please try again later.</p>';
+                    if (packsContainer) packsContainer.innerHTML = msg;
+                    if (decalsContainer) decalsContainer.innerHTML = msg;
+                    if (customContainer) customContainer.innerHTML = msg;
+                    bindShopHandlers();
+                });
+        } else {
+            bindShopHandlers();
+        }
+    } else {
+        bindShopHandlers();
+    }
+}
+
+function bindShopHandlers() {
     
     document.querySelectorAll('.custom-file-input').forEach(function(input) {
+        // Skip already-bound inputs
+        if (input.dataset.uploadBound === 'true') return;
+        input.dataset.uploadBound = 'true';
+        
         const card = input.closest('.card');
         const statusEl = card.querySelector('.custom-url-status');
         const previewEl = card.querySelector('.custom-file-preview');
@@ -245,7 +405,6 @@ function initShopPage() {
             const file = input.files[0];
             if (!file) return;
             
-            // Show local preview before uploading
             const reader = new FileReader();
             reader.onload = function(e) {
                 previewEl.src = e.target.result;
@@ -253,7 +412,6 @@ function initShopPage() {
             };
             reader.readAsDataURL(file);
             
-            // Upload to server
             addBtn.dataset.uploading = 'true';
             addBtn.dataset.imageId = '';
             statusEl.textContent = 'Uploading...';
@@ -284,7 +442,10 @@ function initShopPage() {
         });
     });
     
-    addButtons.forEach(function(button) {
+    document.querySelectorAll('.btn-add-cart:not(.btn-add-decal)').forEach(function(button) {
+        if (button.dataset.handlerBound === 'true') return;
+        button.dataset.handlerBound = 'true';
+        
         button.addEventListener('click', function(e) {
             e.preventDefault();
             
@@ -328,23 +489,31 @@ function initShopPage() {
     });
     
     document.querySelectorAll('.color-selector').forEach(function(selector) {
+        if (selector.dataset.handlerBound === 'true') return;
+        selector.dataset.handlerBound = 'true';
+        
         const options = selector.querySelectorAll('.color-option');
-        const targetBase = selector.dataset.target;
+        const prefix = selector.dataset.prefix;
         options.forEach(function(option) {
             option.addEventListener('click', function() {
                 options.forEach(function(o) { o.classList.remove('selected'); });
                 option.classList.add('selected');
                 const card = selector.closest('.card');
                 const img = card.querySelector('.card-image img');
-                if (img && targetBase) {
-                    const prefix = targetBase === 'odi-standard' ? 'ODI' : 'Motocutz';
-                    img.src = 'images/' + prefix + '_' + option.dataset.color + '.png';
+                if (img && prefix) {
+                    const newSrc = 'images/' + prefix + '_' + option.dataset.color + '.png';
+                    img.src = newSrc;
+                    const addBtn = card.querySelector('.btn-add-decal');
+                    if (addBtn) addBtn.dataset.image = newSrc;
                 }
             });
         });
     });
     
     document.querySelectorAll('.btn-add-decal').forEach(function(button) {
+        if (button.dataset.handlerBound === 'true') return;
+        button.dataset.handlerBound = 'true';
+        
         button.addEventListener('click', function(e) {
             e.preventDefault();
             

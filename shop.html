@@ -51,110 +51,8 @@
                 <p class="subheading">Pre-made 12-packs, ready to ship</p>
             </div>
             
-            <!-- PACKS GRID - 3 columns: Standard / White / Black -->
-            <div class="packs-grid-3">
-
-                <!-- ======== STANDARD PACK (6 White + 6 Black) ======== -->
-                <div class="card">
-                    <div class="card-image">
-                        <img src="images/Mixed_Pack.png" alt="Standard Pack">
-                    </div>
-                    <div class="card-body">
-                        <h2 class="card-title">Standard Pack</h2>
-                        <span class="color-badge color-badge-white">Mixed — 6 White + 6 Black</span>
-                        <p class="card-description">
-                            The best of both worlds — six white stickers and six black
-                            stickers in one 12-pack. Covers light and dark surfaces.
-                            Weather-resistant and built to last.
-                        </p>
-                        <ul class="pack-contents">
-                            <li>6x White laminate stickers (various designs)</li>
-                            <li>6x Black laminate stickers (various designs)</li>
-                            <li>Weather-resistant laminate</li>
-                            <li>Each sticker approx. 3" × 3"</li>
-                        </ul>
-                        <div class="card-price">
-                            $8.99
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-primary btn-add-cart"
-                                data-id="standard-pack"
-                                data-name="Standard Pack"
-                                data-price="8.99"
-                                data-image="images/Mixed_Pack.png">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
-
-                <!-- ======== WHITE 12-PACK ======== -->
-                <div class="card">
-                    <div class="card-image">
-                        <img src="images/White_Pack.png" alt="White 12-Pack">
-                    </div>
-                    <div class="card-body">
-                        <h2 class="card-title">White 12-Pack</h2>
-                        <span class="color-badge color-badge-white">White Stickers</span>
-                        <p class="card-description">
-                            Twelve high-quality white laminate stickers. These look
-                            amazing on dark surfaces — helmets, bike frames,
-                            laptops, toolboxes, you name it.
-                        </p>
-                        <ul class="pack-contents">
-                            <li>12x White laminate stickers (various designs)</li>
-                            <li>Weather-resistant laminate</li>
-                            <li>Each sticker approx. 3" × 3"</li>
-                        </ul>
-                        <div class="card-price">
-                            $9.99
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-primary btn-add-cart"
-                                data-id="white-pack"
-                                data-name="White 12-Pack"
-                                data-price="9.99"
-                                data-image="images/White_Pack.png">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- ======== BLACK 12-PACK ======== -->
-                <div class="card">
-                    <div class="card-image">
-                        <img src="images/Black_Pack.png" alt="Black 12-Pack">
-                    </div>
-                    <div class="card-body">
-                        <h2 class="card-title">Black 12-Pack</h2>
-                        <span class="color-badge color-badge-black">Black Stickers</span>
-                        <p class="card-description">
-                            Twelve premium black laminate stickers with a matte
-                            finish. Sleek, stealthy, and perfect for light-colored
-                            surfaces. Same durable construction.
-                        </p>
-                        <ul class="pack-contents">
-                            <li>12x Black laminate stickers (various designs)</li>
-                            <li>Weather-resistant laminate</li>
-                            <li>Each sticker approx. 3" × 3"</li>
-                        </ul>
-                        <div class="card-price">
-                            $9.99
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-primary btn-add-cart"
-                                data-id="black-pack"
-                                data-name="Black 12-Pack"
-                                data-price="9.99"
-                                data-image="images/Black_Pack.png">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
-
-            </div>
+            <!-- PACKS GRID - rendered by JS -->
+            <div id="products-packs" class="packs-grid-3"></div>
 
             <!-- ======== STANDARD DECALS (2-column grid) ======== -->
             <div style="margin-top: var(--space-xl);">
@@ -163,155 +61,11 @@
                     <p class="subheading">Pre-made designs in your choice of color — sold individually</p>
                 </div>
                 
-                <div class="decals-grid">
-
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="images/ODI_White.png" alt="ODI Plate Decal">
-                        </div>
-                        <div class="card-body">
-                            <h2 class="card-title">ODI Plate Decal</h2>
-                            <p class="card-description">
-                                Premium laminate decal for your ODI plate. Pick your color below.
-                            </p>
-                            <div class="card-price">
-                                $15.99
-                            </div>
-                            <div class="color-selector" data-target="odi-standard">
-                                    <div class="color-option selected" data-color="White" style="background:#ffffff;border-color:#ccc;" title="White" aria-label="White"></div>
-                                    <div class="color-option" data-color="Blue" style="background:#3498db;" title="Blue" aria-label="Blue"></div>
-                                    <div class="color-option" data-color="Orange" style="background:#e67e22;" title="Orange" aria-label="Orange"></div>
-                                    <div class="color-option" data-color="Red" style="background:#e74c3c;" title="Red" aria-label="Red"></div>
-                                    <div class="color-option" data-color="Purple" style="background:#9b59b6;" title="Purple" aria-label="Purple"></div>
-                                    <div class="color-option" data-color="Yellow" style="background:#f1c40f;" title="Yellow" aria-label="Yellow"></div>
-                                    <div class="color-option" data-color="Pink" style="background:#e91e63;" title="Pink" aria-label="Pink"></div>
-                                    <div class="color-option" data-color="Green" style="background:#2ecc71;" title="Green" aria-label="Green"></div>
-                                </div>
-                                <input type="text" class="decal-handle" placeholder="@yourhandle" value="@cjbik" maxlength="30">
-                            </div>
-                            <div class="card-footer">
-                                <button class="btn btn-primary btn-add-decal"
-                                        data-base-id="odi-standard"
-                                        data-name="ODI Plate Decal"
-                                        data-price="15.99"
-                                        data-image="images/ODI_White.png">
-                                    Add to Cart
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="images/Motocutz_White.png" alt="Motocutz Plate Decal">
-                            </div>
-                            <div class="card-body">
-                                <h2 class="card-title">Motocutz Plate Decal</h2>
-                                <p class="card-description">
-                                    Premium laminate decal for your motocross plate. Pick your color below.
-                                </p>
-                                <div class="card-price">
-                                    $15.99
-                                </div>
-                                <div class="color-selector" data-target="motocutz-standard">
-                                    <div class="color-option selected" data-color="White" style="background:#ffffff;border-color:#ccc;" title="White" aria-label="White"></div>
-                                    <div class="color-option" data-color="Blue" style="background:#3498db;" title="Blue" aria-label="Blue"></div>
-                                    <div class="color-option" data-color="Orange" style="background:#e67e22;" title="Orange" aria-label="Orange"></div>
-                                    <div class="color-option" data-color="Red" style="background:#e74c3c;" title="Red" aria-label="Red"></div>
-                                    <div class="color-option" data-color="Purple" style="background:#9b59b6;" title="Purple" aria-label="Purple"></div>
-                                    <div class="color-option" data-color="Yellow" style="background:#f1c40f;" title="Yellow" aria-label="Yellow"></div>
-                                    <div class="color-option" data-color="Pink" style="background:#e91e63;" title="Pink" aria-label="Pink"></div>
-                                    <div class="color-option" data-color="Green" style="background:#2ecc71;" title="Green" aria-label="Green"></div>
-                                </div>
-                            <input type="text" class="decal-handle" placeholder="@yourhandle" value="@cjbik" maxlength="30">
-                        </div>
-                        <div class="card-footer">
-                            <button class="btn btn-primary btn-add-decal"
-                                    data-base-id="motocutz-standard"
-                                    data-name="Motocutz Plate Decal"
-                                    data-price="15.99"
-                                    data-image="images/Motocutz_White.png">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
+                <div id="products-decals" class="decals-grid"></div>
             </div>
 
             <!-- ======== CUSTOM DECALS (2-column grid) ======== -->
-            <div class="custom-decals-grid">
-
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="card-title">ODI Plate Decal</h2>
-                        <span class="color-badge color-badge-white">ODI</span>
-                        <p class="card-description">
-                            Design your ODI plate decal on Motocutz, then upload your artwork here.
-                        </p>
-                        <div class="card-price">
-                            $15.99
-                        </div>
-                        <div class="custom-upload-group">
-                            <div class="custom-upload-top-row">
-                                <a href="https://motocutzmx.com/products/surron-number-plate-decal-custom"
-                                   target="_blank" rel="noopener"
-                                   class="btn btn-outline btn-sm btn-design-link">
-                                    Design on Motocutz →
-                                </a>
-                                <input type="file" class="custom-file-input" accept="image/png,image/jpeg,image/webp">
-                            </div>
-                            <img class="custom-file-preview" style="display:none; border-radius:4px;">
-                            <div class="custom-url-status"></div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-primary btn-add-cart btn-custom-cart"
-                                data-id="custom-decal-odi"
-                                data-name="ODI Plate Decal"
-                                data-price="15.99"
-                                data-image="🎨"
-                                data-custom="true">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="card-title">Motocutz Plate Decal</h2>
-                        <span class="color-badge color-badge-white">Motocutz</span>
-                        <p class="card-description">
-                            Design your custom motocross plate decal on Motocutz, then upload your artwork here.
-                        </p>
-                        <div class="card-price">
-                            $15.99
-                        </div>
-                        <div class="custom-upload-group">
-                            <div class="custom-upload-top-row">
-                                <a href="https://motocutzmx.com/products/custom-og-motocutz-number-plate-decal"
-                                   target="_blank" rel="noopener"
-                                   class="btn btn-outline btn-sm btn-design-link">
-                                    Design on Motocutz →
-                                </a>
-                                <input type="file" class="custom-file-input" accept="image/png,image/jpeg,image/webp">
-                            </div>
-                            <img class="custom-file-preview" style="display:none; border-radius:4px;">
-                            <div class="custom-url-status"></div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-primary btn-add-cart btn-custom-cart"
-                                data-id="custom-decal-motocutz"
-                                data-name="Motocutz Plate Decal"
-                                data-price="15.99"
-                                data-image="🎨"
-                                data-custom="true">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
-
-            </div>
+            <div id="products-custom" class="custom-decals-grid" style="margin-top: var(--space-xl);"></div>
             
             <!-- Custom pack builder promo -->
             <div style="text-align: center; margin-top: var(--space-xl); padding: var(--space-xl); border-top: 1px solid #222;">
@@ -361,7 +115,7 @@
                 <div>
                     <h4 class="footer-heading">Info</h4>
                     <ul class="footer-links">
-                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="/faq#shipping">Shipping Info</a></li>
                         <li><a href="mailto:Cjsbikpro@gmail.com">Contact</a></li>
                         <li><a href="/faq">FAQ</a></li>
                     </ul>
