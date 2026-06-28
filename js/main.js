@@ -557,7 +557,7 @@ function initCartPage() {
         }
         
         itemEl.innerHTML = [
-            '<div class="cart-item-image">' + (item.image || '📦') + '</div>',
+            '<div class="cart-item-image"><img src="' + (item.image || '📦') + '" alt="' + item.name + '"></div>',
             '<div class="cart-item-info">',
             '  <h4>' + item.name + '</h4>',
             '  <div class="item-detail">' + formatPrice(item.price) + ' each</div>',
