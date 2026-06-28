@@ -116,6 +116,7 @@ function renderPage(catalog, message) {
             'custom-decal': 'Custom Decal'
         }[p.type] || p.type;
         var imgSrc = p.image || p.baseImage || '';
+        if (imgSrc && imgSrc.indexOf('://') === -1 && !imgSrc.startsWith('/')) imgSrc = '/' + imgSrc;
         var imgHtml = imgSrc ? '<img src="' + escapeHtml(imgSrc) + '" style="width:50px;height:50px;object-fit:contain;border-radius:4px;background:#1e1e1e;vertical-align:middle">' : '\u2014';
         return '<tr>' +
             '<td>' + imgHtml + '</td>' +
