@@ -317,9 +317,6 @@ function renderDecalCard(p) {
 
 function renderCustomDecalCard(p) {
     return '<div class="card">' +
-        '<div class="card-image">' +
-        '  <img src="' + PLACEHOLDER_IMG + '" alt="' + p.name + '">' +
-        '</div>' +
         '<div class="card-body">' +
         '  <h2 class="card-title">' + p.name + '</h2>' +
         '  <span class="color-badge ' + (p.badgeClass || 'color-badge-white') + '">' + (p.badge || '') + '</span>' +
@@ -341,7 +338,7 @@ function renderCustomDecalCard(p) {
         '          data-id="' + p.id + '"' +
         '          data-name="' + p.name + '"' +
         '          data-price="' + p.price + '"' +
-        '          data-image="' + PLACEHOLDER_IMG + '"' +
+        '          data-image="🎨"' +
         '          data-custom="true">' +
         '    Add to Cart' +
         '  </button>' +

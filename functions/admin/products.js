@@ -115,9 +115,16 @@ function renderPage(catalog, message) {
             decal: 'Decal',
             'custom-decal': 'Custom Decal'
         }[p.type] || p.type;
-        var imgSrc = p.image || p.baseImage || 'images/placeholder.svg';
-        if (imgSrc.indexOf('://') === -1 && !imgSrc.startsWith('/')) imgSrc = '/' + imgSrc;
-        var imgHtml = '<img src="' + escapeHtml(imgSrc) + '" style="width:50px;height:50px;object-fit:contain;border-radius:4px;background:#1e1e1e;vertical-align:middle">';
+        var imgSrc = p.image || p.baseImage || '';
+        var imgHtml;
+        if (imgSrc) {
+            if (imgSrc.indexOf('://') === -1 && !imgSrc.startsWith('/')) imgSrc = '/' + imgSrc;
+            imgHtml = '<img src="' + escapeHtml(imgSrc) + '" style="width:50px;height:50px;object-fit:contain;border-radius:4px;background:#1e1e1e;vertical-align:middle">';
+        } else if (p.hasUpload) {
+            imgHtml = '<span style="display:flex;align-items:center;justify-content:center;width:50px;height:50px;color:#555;font-size:0.7rem;text-align:center">Custom</span>';
+        } else {
+            imgHtml = '<img src="/images/placeholder.svg" style="width:50px;height:50px;object-fit:contain;border-radius:4px;background:#1e1e1e;vertical-align:middle">';
+        }
         return '<tr>' +
             '<td>' + imgHtml + '</td>' +
             '<td>' + escapeHtml(p.id) + '</td>' +
