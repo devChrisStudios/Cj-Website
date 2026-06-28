@@ -626,6 +626,8 @@ export async function onRequest(context) {
         } catch (e) {}
     }
 
+    var msg = url.searchParams.get('msg') || null;
+
     if (context.request.method === 'POST') {
         var formData = await context.request.formData();
         var action = formData.get('action');
@@ -635,9 +637,7 @@ export async function onRequest(context) {
             if (!isNaN(idx) && idx >= 0 && idx < catalog.products.length) {
                 catalog.products.splice(idx, 1);
                 await context.env.DECAL_UPLOADS.put('products/catalog.json', JSON.stringify(catalog));
-                return new Response(renderPage(catalog, 'Product deleted.'), {
-                    headers: { 'Content-Type': 'text/html' }
-                });
+                return Response.redirect(url.origin + '/admin/products?msg=Product+deleted.', 302);
             }
         }
 
@@ -653,94 +653,93 @@ export async function onRequest(context) {
             if (type === '__other__') {
                 var customType = formData.get('custom_type_name') || '';
                 if (!customType) {
-                    return new Response(renderPage(catalog, 'Please enter a custom type name.'), {
-                        headers: { 'Content-Type': 'text/html' }
-                    });
-                }
-                type = customType.trim().toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '');
-            }
-
-            var product = {
-                type: type,
-                id: id,
-                name: name,
-                price: price,
-                description: description
-            };
-
-            // Handle image uploads (for packs and custom types)
-            var imageFile = formData.get('image_file');
-            var uploadedImagePath = null;
-            if (imageFile && imageFile.size > 0) {
-                var allowed = ['image/png', 'image/jpeg', 'image/webp'];
-                if (allowed.includes(imageFile.type) && imageFile.size <= 10 * 1024 * 1024) {
-                    var ext = imageFile.name.split('.').pop();
-                    var key = 'product-images/' + id + '-' + Date.now() + '.' + ext;
-                    await context.env.DECAL_UPLOADS.put(key, await imageFile.arrayBuffer());
-                    uploadedImagePath = '/' + key;
+                    msg = 'Please enter a custom type name.';
+                } else {
+                    type = customType.trim().toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '');
                 }
             }
 
-            // Handle base image upload (for decals)
-            var baseImageFile = formData.get('base_image_file');
-            var uploadedBaseImagePath = null;
-            if (baseImageFile && baseImageFile.size > 0) {
-                var allowed2 = ['image/png', 'image/jpeg', 'image/webp'];
-                if (allowed2.includes(baseImageFile.type) && baseImageFile.size <= 10 * 1024 * 1024) {
-                    var ext2 = baseImageFile.name.split('.').pop();
-                    var key2 = 'product-images/' + id + '-base-' + Date.now() + '.' + ext2;
-                    await context.env.DECAL_UPLOADS.put(key2, await baseImageFile.arrayBuffer());
-                    uploadedBaseImagePath = '/' + key2;
+            if (!msg) {
+                var product = {
+                    type: type,
+                    id: id,
+                    name: name,
+                    price: price,
+                    description: description
+                };
+
+                // Handle image uploads (for packs and custom types)
+                var imageFile = formData.get('image_file');
+                var uploadedImagePath = null;
+                if (imageFile && imageFile.size > 0) {
+                    var allowed = ['image/png', 'image/jpeg', 'image/webp'];
+                    if (allowed.includes(imageFile.type) && imageFile.size <= 10 * 1024 * 1024) {
+                        var ext = imageFile.name.split('.').pop();
+                        var key = 'product-images/' + id + '-' + Date.now() + '.' + ext;
+                        await context.env.DECAL_UPLOADS.put(key, await imageFile.arrayBuffer());
+                        uploadedImagePath = '/' + key;
+                    }
                 }
-            }
 
-            // Save ALL possible fields - they'll be ignored by the shop if not relevant
-            product.image = uploadedImagePath || formData.get('image') || undefined;
-            product.baseImage = uploadedBaseImagePath || formData.get('baseImage') || undefined;
-            product.imagePrefix = formData.get('imagePrefix') || undefined;
-            product.longDescription = formData.get('longDescription') || undefined;
-            product.badge = formData.get('badge') || undefined;
-            product.badgeClass = formData.get('badgeClass') || 'color-badge-white';
-            product.featured = formData.get('featured') === 'true';
-
-            var featuresRaw = formData.get('features') || '';
-            product.features = featuresRaw.split('\n').map(function(s) { return s.trim(); }).filter(function(s) { return s; });
-            if (product.features.length === 0) delete product.features;
-
-            var colorsRaw = formData.get('colors') || '';
-            product.colors = colorsRaw.split(',').map(function(s) { return s.trim(); }).filter(function(s) { return s; });
-            if (product.colors.length === 0) delete product.colors;
-
-            product.hasHandle = formData.get('hasHandle') === 'true';
-            product.handleDefault = formData.get('handleDefault') || undefined;
-            product.designLink = formData.get('designLink') || undefined;
-            product.designLinkText = formData.get('designLinkText') || undefined;
-            product.hasUpload = true;
-
-            // Clean up undefined/empty values for cleaner JSON
-            for (var key3 in product) {
-                if (product[key3] === undefined || product[key3] === null) {
-                    delete product[key3];
+                // Handle base image upload (for decals)
+                var baseImageFile = formData.get('base_image_file');
+                var uploadedBaseImagePath = null;
+                if (baseImageFile && baseImageFile.size > 0) {
+                    var allowed2 = ['image/png', 'image/jpeg', 'image/webp'];
+                    if (allowed2.includes(baseImageFile.type) && baseImageFile.size <= 10 * 1024 * 1024) {
+                        var ext2 = baseImageFile.name.split('.').pop();
+                        var key2 = 'product-images/' + id + '-base-' + Date.now() + '.' + ext2;
+                        await context.env.DECAL_UPLOADS.put(key2, await baseImageFile.arrayBuffer());
+                        uploadedBaseImagePath = '/' + key2;
+                    }
                 }
-            }
 
-            if (editIndex !== null && editIndex !== '') {
-                var editIdx = parseInt(editIndex);
-                if (!isNaN(editIdx) && editIdx >= 0 && editIdx < catalog.products.length) {
-                    catalog.products[editIdx] = product;
+                // Save ALL possible fields - they'll be ignored by the shop if not relevant
+                product.image = uploadedImagePath || formData.get('image') || undefined;
+                product.baseImage = uploadedBaseImagePath || formData.get('baseImage') || undefined;
+                product.imagePrefix = formData.get('imagePrefix') || undefined;
+                product.longDescription = formData.get('longDescription') || undefined;
+                product.badge = formData.get('badge') || undefined;
+                product.badgeClass = formData.get('badgeClass') || 'color-badge-white';
+                product.featured = formData.get('featured') === 'true';
+
+                var featuresRaw = formData.get('features') || '';
+                product.features = featuresRaw.split('\n').map(function(s) { return s.trim(); }).filter(function(s) { return s; });
+                if (product.features.length === 0) delete product.features;
+
+                var colorsRaw = formData.get('colors') || '';
+                product.colors = colorsRaw.split(',').map(function(s) { return s.trim(); }).filter(function(s) { return s; });
+                if (product.colors.length === 0) delete product.colors;
+
+                product.hasHandle = formData.get('hasHandle') === 'true';
+                product.handleDefault = formData.get('handleDefault') || undefined;
+                product.designLink = formData.get('designLink') || undefined;
+                product.designLinkText = formData.get('designLinkText') || undefined;
+                product.hasUpload = true;
+
+                // Clean up undefined/empty values for cleaner JSON
+                for (var key3 in product) {
+                    if (product[key3] === undefined || product[key3] === null) {
+                        delete product[key3];
+                    }
                 }
-            } else {
-                catalog.products.push(product);
-            }
 
-            await context.env.DECAL_UPLOADS.put('products/catalog.json', JSON.stringify(catalog));
-            return new Response(renderPage(catalog, 'Product saved.'), {
-                headers: { 'Content-Type': 'text/html' }
-            });
+                if (editIndex !== null && editIndex !== '') {
+                    var editIdx = parseInt(editIndex);
+                    if (!isNaN(editIdx) && editIdx >= 0 && editIdx < catalog.products.length) {
+                        catalog.products[editIdx] = product;
+                    }
+                } else {
+                    catalog.products.push(product);
+                }
+
+                await context.env.DECAL_UPLOADS.put('products/catalog.json', JSON.stringify(catalog));
+                return Response.redirect(url.origin + '/admin/products?msg=Product+saved.', 302);
+            }
         }
     }
 
-    return new Response(renderPage(catalog, null), {
+    return new Response(renderPage(catalog, msg), {
         headers: { 'Content-Type': 'text/html' }
     });
 }
