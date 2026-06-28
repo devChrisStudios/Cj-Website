@@ -626,6 +626,7 @@ export async function onRequest(context) {
         } catch (e) {}
     }
 
+    var url = new URL(context.request.url);
     var msg = url.searchParams.get('msg') || null;
 
     if (context.request.method === 'POST') {
