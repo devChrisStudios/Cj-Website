@@ -413,10 +413,18 @@ function initShopPage() {
     // --- Standard decal color pickers ---
     document.querySelectorAll('.color-selector').forEach(function(selector) {
         const options = selector.querySelectorAll('.color-option');
+        const targetBase = selector.dataset.target; // e.g. 'odi-standard' or 'motocutz-standard'
         options.forEach(function(option) {
             option.addEventListener('click', function() {
                 options.forEach(function(o) { o.classList.remove('selected'); });
                 option.classList.add('selected');
+                // Swap the card image to match the selected color
+                const card = selector.closest('.card');
+                const img = card.querySelector('.card-image img');
+                if (img && targetBase) {
+                    const prefix = targetBase === 'odi-standard' ? 'ODI' : 'Motocutz';
+                    img.src = 'images/' + prefix + '_' + option.dataset.color + '.png';
+                }
             });
         });
     });

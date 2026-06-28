@@ -1062,13 +1062,13 @@ p {
     justify-content: center;
     font-family: var(--font-heading);
     font-size: 2rem;
-    border: 2px dashed #333;
     position: relative;
 }
 
-.sticker-option .sticker-preview .img-placeholder {
-    opacity: 0.5;
-    font-size: 2rem;
+.sticker-option .sticker-preview .sticker-img {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
 }
 
 .sticker-option .sticker-name {

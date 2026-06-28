@@ -45,188 +45,20 @@
 // If a design only comes in one color, just delete the other entry.
 
 const STICKERS = [
-    // ── Each block is one sticker. Colors (White/Black) are filled in.
-    // ── Replace NAME with your design name, IMAGE with the file path later.
-    //
-    //   {
-    //       id: 'design-01-white',   // unique id — keep it lowercase, no spaces
-    //       name: 'DESIGN 01',       // customer-facing name — replace this
-    //       color: 'White',          // 'White' or 'Black'
-    //       image: '📷',             // replace with 'images/my-design.png'
-    //       category: 'brand'        // just for grouping, pick any name
-    //   }
-    //
-    // TIP: Each design can come in both White and Black. Just duplicate
-    // the block and change the color. If one color doesn't exist, delete that block.
-
-    {
-        id: 'design-01-white',
-        name: 'DESIGN 01',
-        color: 'White',
-        image: '📷',
-        category: 'brand'
-    },
-    {
-        id: 'design-01-black',
-        name: 'DESIGN 01',
-        color: 'Black',
-        image: '📷',
-        category: 'brand'
-    },
-    {
-        id: 'design-02-white',
-        name: 'DESIGN 02',
-        color: 'White',
-        image: '📷',
-        category: 'brand'
-    },
-    {
-        id: 'design-02-black',
-        name: 'DESIGN 02',
-        color: 'Black',
-        image: '📷',
-        category: 'brand'
-    },
-    {
-        id: 'design-03-white',
-        name: 'DESIGN 03',
-        color: 'White',
-        image: '📷',
-        category: 'riding'
-    },
-    {
-        id: 'design-03-black',
-        name: 'DESIGN 03',
-        color: 'Black',
-        image: '📷',
-        category: 'riding'
-    },
-    {
-        id: 'design-04-white',
-        name: 'DESIGN 04',
-        color: 'White',
-        image: '📷',
-        category: 'riding'
-    },
-    {
-        id: 'design-04-black',
-        name: 'DESIGN 04',
-        color: 'Black',
-        image: '📷',
-        category: 'riding'
-    },
-    {
-        id: 'design-05-white',
-        name: 'DESIGN 05',
-        color: 'White',
-        image: '📷',
-        category: 'riding'
-    },
-    {
-        id: 'design-05-black',
-        name: 'DESIGN 05',
-        color: 'Black',
-        image: '📷',
-        category: 'riding'
-    },
-    {
-        id: 'design-06-white',
-        name: 'DESIGN 06',
-        color: 'White',
-        image: '📷',
-        category: 'attitude'
-    },
-    {
-        id: 'design-06-black',
-        name: 'DESIGN 06',
-        color: 'Black',
-        image: '📷',
-        category: 'attitude'
-    },
-    {
-        id: 'design-07-white',
-        name: 'DESIGN 07',
-        color: 'White',
-        image: '📷',
-        category: 'attitude'
-    },
-    {
-        id: 'design-07-black',
-        name: 'DESIGN 07',
-        color: 'Black',
-        image: '📷',
-        category: 'attitude'
-    },
-    {
-        id: 'design-08-white',
-        name: 'DESIGN 08',
-        color: 'White',
-        image: '📷',
-        category: 'attitude'
-    },
-    {
-        id: 'design-08-black',
-        name: 'DESIGN 08',
-        color: 'Black',
-        image: '📷',
-        category: 'attitude'
-    },
-    {
-        id: 'design-09-white',
-        name: 'DESIGN 09',
-        color: 'White',
-        image: '📷',
-        category: 'attitude'
-    },
-    {
-        id: 'design-09-black',
-        name: 'DESIGN 09',
-        color: 'Black',
-        image: '📷',
-        category: 'attitude'
-    },
-    {
-        id: 'design-10-white',
-        name: 'DESIGN 10',
-        color: 'White',
-        image: '📷',
-        category: 'extra'
-    },
-    {
-        id: 'design-10-black',
-        name: 'DESIGN 10',
-        color: 'Black',
-        image: '📷',
-        category: 'extra'
-    },
-    {
-        id: 'design-11-white',
-        name: 'DESIGN 11',
-        color: 'White',
-        image: '📷',
-        category: 'extra'
-    },
-    {
-        id: 'design-11-black',
-        name: 'DESIGN 11',
-        color: 'Black',
-        image: '📷',
-        category: 'extra'
-    },
-    {
-        id: 'design-12-white',
-        name: 'DESIGN 12',
-        color: 'White',
-        image: '📷',
-        category: 'extra'
-    },
-    {
-        id: 'design-12-black',
-        name: 'DESIGN 12',
-        color: 'Black',
-        image: '📷',
-        category: 'extra'
-    }
+    { id: 'blue-white',   name: 'Blue',   color: 'White', image: 'images/Blue_Sticker.png',   category: 'color' },
+    { id: 'blue-black',   name: 'Blue',   color: 'Black', image: 'images/Blue_Sticker.png',   category: 'color' },
+    { id: 'red-white',    name: 'Red',    color: 'White', image: 'images/Red_Sticker.png',    category: 'color' },
+    { id: 'red-black',    name: 'Red',    color: 'Black', image: 'images/Red_Sticker.png',    category: 'color' },
+    { id: 'green-white',  name: 'Green',  color: 'White', image: 'images/Green_Sticker.png',  category: 'color' },
+    { id: 'green-black',  name: 'Green',  color: 'Black', image: 'images/Green_Sticker.png',  category: 'color' },
+    { id: 'purple-white', name: 'Purple', color: 'White', image: 'images/Purple_Sticker.png', category: 'color' },
+    { id: 'purple-black', name: 'Purple', color: 'Black', image: 'images/Purple_Sticker.png', category: 'color' },
+    { id: 'orange-white', name: 'Orange', color: 'White', image: 'images/Orange_Sticker.png', category: 'color' },
+    { id: 'orange-black', name: 'Orange', color: 'Black', image: 'images/Orange_Sticker.png', category: 'color' },
+    { id: 'pink-white',   name: 'Pink',   color: 'White', image: 'images/Pink_Sticker.png',   category: 'color' },
+    { id: 'pink-black',   name: 'Pink',   color: 'Black', image: 'images/Pink_Sticker.png',   category: 'color' },
+    { id: 'black-white',  name: 'Black',  color: 'White',  image: 'images/Black_Sticker.png',  category: 'color' },
+    { id: 'grey-white',   name: 'Grey',   color: 'White',  image: 'images/Grey_Sticker.png',   category: 'color' },
 ];
 
 // Maximum number of stickers allowed in a custom pack
@@ -271,8 +103,8 @@ document.addEventListener('DOMContentLoaded', function() {
         option.dataset.id = sticker.id;
         
         option.innerHTML = [
-            '<div class="sticker-preview" style="background: ' + (sticker.color === 'White' ? '#1a1a1a' : '#e0e0e0') + '">',
-            '  <span class="img-placeholder">' + sticker.image + '</span>',
+            '<div class="sticker-preview" style="background: ' + (sticker.color === 'White' ? '#ffffff' : '#111111') + '">',
+            '  <img src="' + sticker.image + '" alt="' + sticker.name + '" class="sticker-img">',
             '  <div class="sticker-count" style="display:none;">×0</div>',
             '</div>',
             '<div class="sticker-name">' + sticker.name + '</div>',
@@ -428,7 +260,7 @@ function updateBuilderUI() {
                 const item = document.createElement('div');
                 item.className = 'selected-item';
                 item.innerHTML = [
-                    '<span>' + sticker.image + ' ' + sticker.name + ' (' + sticker.color + ')</span>',
+                    '<span>' + sticker.name + ' (' + sticker.color + ')</span>',
                     '<button class="remove-btn" data-id="' + sticker.id + '">✕</button>'
                 ].join('');
                 
@@ -448,7 +280,7 @@ function updateBuilderUI() {
         if (selectedStickers.length === MAX_PACK_SIZE) {
             // Exactly 12 selected - ready to add!
             addToCartBtn.disabled = false;
-            var priceDisplay = PACK_PRICE > 0 ? 'Add to Cart — $' + PACK_PRICE.toFixed(2) : 'Add to Cart — INSERT PRICE';
+            var priceDisplay = 'Add to Cart — $' + PACK_PRICE.toFixed(2);
             addToCartBtn.textContent = priceDisplay;
         } else if (selectedStickers.length === 0) {
             addToCartBtn.disabled = true;
