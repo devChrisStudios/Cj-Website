@@ -55,14 +55,18 @@ function renderDashboard(orders) {
                 details.push('Stickers: ' + escapeHtml(item.stickers.join(', ')));
             }
 
-            var imgLink = '';
+            var imgHtml = '';
             if (item.imageId) {
-                imgLink = ' <a href="/admin/image?key=' + encodeURIComponent(item.imageId) + '" target="_blank" style="color:#d90429">[View Decal]</a>';
+                var imgUrl = '/admin/image?key=' + encodeURIComponent(item.imageId);
+                imgHtml = '<div style="margin-top:4px">' +
+                    '<a href="' + imgUrl + '" target="_blank"><img src="' + imgUrl + '" style="max-width:120px;max-height:80px;border-radius:4px;border:1px solid #333;vertical-align:middle"></a>' +
+                    ' <a href="' + imgUrl + '&download=1" style="color:#888;font-size:0.8em">Download</a>' +
+                    '</div>';
             }
 
             var detailHtml = details.length > 0 ? '<div style="font-size:0.8em;color:#888;margin-top:2px">' + details.join(' | ') + '</div>' : '';
 
-            return '<div style="padding:4px 0">' + escapeHtml(item.name) + ' × ' + (item.quantity || 1) + imgLink + detailHtml + '</div>';
+            return '<div style="padding:4px 0">' + escapeHtml(item.name) + ' × ' + (item.quantity || 1) + detailHtml + imgHtml + '</div>';
         }).join('');
 
         var date = order.createdAt ? new Date(order.createdAt).toLocaleString() : '—';

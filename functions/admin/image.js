@@ -20,13 +20,19 @@ export async function onRequest(context) {
 
         var ext = key.split('.').pop().toLowerCase();
         var contentType = MIME_TYPES[ext] || 'application/octet-stream';
+        var isDownload = new URL(context.request.url).searchParams.get('download') === '1';
 
-        return new Response(obj.body, {
-            headers: {
-                'Content-Type': contentType,
-                'Cache-Control': 'private, max-age=3600',
-            }
-        });
+        var headers = {
+            'Content-Type': contentType,
+            'Cache-Control': 'private, max-age=3600',
+        };
+
+        if (isDownload) {
+            var filename = key.split('/').pop();
+            headers['Content-Disposition'] = 'attachment; filename="' + filename + '"';
+        }
+
+        return new Response(obj.body, { headers: headers });
     } catch (err) {
         return new Response(err.message, { status: 500 });
     }
