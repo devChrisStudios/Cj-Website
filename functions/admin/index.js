@@ -116,11 +116,13 @@ function renderDashboard(orders) {
     '<style>' +
     '*{box-sizing:border-box}' +
     'body{margin:0;background:#0a0a0a;color:#eee;font-family:system-ui,sans-serif}' +
-    '.header{background:#151515;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #222}' +
+    '.header{background:#151515;padding:1rem 2rem;display:flex;align-items:center;gap:2rem;border-bottom:1px solid #222}' +
     '.header h1{margin:0;font-size:1.25rem}' +
     '.header .red{color:#d90429}' +
     '.header a{color:#888;text-decoration:none;font-size:0.875rem}' +
     '.header a:hover{color:#d90429}' +
+    '.header .nav-links{display:flex;gap:1rem}' +
+    '.header .nav-links a.active{color:#d90429}' +
     '.content{padding:2rem}' +
     'table{width:100%;border-collapse:collapse}' +
     'th{text-align:left;padding:0.75rem 0.5rem;border-bottom:1px solid #333;color:#888;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em}' +
@@ -134,7 +136,11 @@ function renderDashboard(orders) {
     '<body>' +
     '<div class="header">' +
     '<h1><span class="red">BIK</span>FAM Admin</h1>' +
-    '<a href="/admin/logout">Sign Out</a>' +
+    '<div class="nav-links">' +
+    '<a href="/admin" class="active">Orders</a>' +
+    '<a href="/admin/products">Products</a>' +
+    '</div>' +
+    '<a href="/admin/logout" style="margin-left:auto">Sign Out</a>' +
     '</div>' +
     '<div class="content">' +
     (orders.length === 0 ?
