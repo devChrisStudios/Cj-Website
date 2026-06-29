@@ -73,23 +73,8 @@ export async function onRequest(context) {
                 {
                     shipping_rate_data: {
                         type: 'fixed_amount',
-                        fixed_amount: { amount: 499, currency: 'usd' },
-                        display_name: 'Standard Shipping',
-                        delivery_estimate: {
-                            minimum: { unit: 'business_day', value: 5 },
-                            maximum: { unit: 'business_day', value: 10 },
-                        },
-                    },
-                },
-                {
-                    shipping_rate_data: {
-                        type: 'fixed_amount',
-                        fixed_amount: { amount: 1299, currency: 'usd' },
-                        display_name: 'Express Shipping',
-                        delivery_estimate: {
-                            minimum: { unit: 'business_day', value: 2 },
-                            maximum: { unit: 'business_day', value: 3 },
-                        },
+                        fixed_amount: { amount: 899, currency: 'usd' },
+                        display_name: 'Shipping',
                     },
                 },
             ],
