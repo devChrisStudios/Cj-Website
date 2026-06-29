@@ -40,7 +40,9 @@ function escapeHtml(str) {
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-function renderDashboard(orders) {
+function renderDashboard(orders, error) {
+    var errorHtml = error ? '<div style="background:rgba(217,4,41,0.15);border:1px solid #d90429;color:#d90429;padding:12px 20px;border-radius:4px;margin-bottom:16px;font-size:0.875rem">' + escapeHtml(error) + '</div>' : '';
+
     var rows = orders.map(function(order) {
         var itemsHtml = (order.items || []).map(function(item) {
             var details = [];
@@ -93,10 +95,8 @@ function renderDashboard(orders) {
         var customerInfo = name;
         customerInfo += '<br><span style="color:#888;font-size:0.8em">' + email + '</span>';
         if (phone) {
-            customerInfo += '<br><span style="color:#888;font-size:0.8em">' + phone + '</span>';
+            customerInfo += '<br><span style="color:#888;font-size:0.8em">' + escapeHtml(phone) + '</span>';
         }
-
-        var cols = 5;
 
         return '<tr>' +
             '<td>' + date + '</td>' +
@@ -105,7 +105,7 @@ function renderDashboard(orders) {
             '<td>' + shippingHtml + '</td>' +
             '<td>' + total + '</td>' +
             '</tr>';
-    }).join('') || '<tr><td colspan="5" style="text-align:center;color:#888;padding:2rem">No orders yet</td></tr>';
+    }).join('');
 
     return '<!DOCTYPE html>' +
     '<html lang="en">' +
@@ -144,6 +144,7 @@ function renderDashboard(orders) {
     '<a href="/admin/logout" style="margin-left:auto">Sign Out</a>' +
     '</div>' +
     '<div class="content">' +
+    errorHtml +
     (orders.length === 0 ?
         '<div class="empty"><div class="empty-icon">📦</div><p>No orders yet</p></div>' :
         '<table><thead><tr><th>Date</th><th>Customer</th><th>Items</th><th>Shipping</th><th>Total</th></tr></thead><tbody>' + rows + '</tbody></table>') +
@@ -180,25 +181,30 @@ export async function onRequest(context) {
     if (session && env.ADMIN_SECRET && session === env.ADMIN_SECRET) {
         // Fetch orders from R2
         var orders = [];
+        var fetchError = null;
         try {
             var list = await env.DECAL_UPLOADS.list({ prefix: 'orders/' });
-            for (var i = 0; i < list.objects.length; i++) {
-                var obj = list.objects[i];
-                var data = await env.DECAL_UPLOADS.get(obj.key);
-                if (data) {
-                    var text = await data.text();
-                    var order = JSON.parse(text);
-                    orders.push(order);
+            if (!list.objects || !Array.isArray(list.objects)) {
+                fetchError = 'R2 list returned unexpected result';
+            } else {
+                for (var i = 0; i < list.objects.length; i++) {
+                    var obj = list.objects[i];
+                    var data = await env.DECAL_UPLOADS.get(obj.key);
+                    if (data) {
+                        var text = await data.text();
+                        var order = JSON.parse(text);
+                        orders.push(order);
+                    }
                 }
+                orders.sort(function(a, b) {
+                    return new Date(b.createdAt) - new Date(a.createdAt);
+                });
             }
-            orders.sort(function(a, b) {
-                return new Date(b.createdAt) - new Date(a.createdAt);
-            });
         } catch (e) {
-            // R2 not available or no orders
+            fetchError = e.message || String(e);
         }
 
-        return new Response(renderDashboard(orders), {
+        return new Response(renderDashboard(orders, fetchError), {
             headers: { 'Content-Type': 'text/html' }
         });
     }
