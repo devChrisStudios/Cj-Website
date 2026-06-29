@@ -51,7 +51,11 @@ export async function onRequest(context) {
             return lineItem;
         });
 
-        const session = await stripe.checkout.sessions.create({
+        // Tax rate — set TAX_RATE_ID env var after creating one via Stripe API:
+        // stripe.taxRates.create({ display_name: 'Sales Tax', percentage: 7, inclusive: false })
+        var taxRateId = context.env.TAX_RATE_ID || null;
+
+        const sessionOptions = {
             line_items: lineItems,
             mode: 'payment',
             success_url: origin + '/cart?session_id={CHECKOUT_SESSION_ID}',
@@ -65,7 +69,39 @@ export async function onRequest(context) {
             metadata: {
                 cart_ref: cartRef,
             },
-        });
+            shipping_options: [
+                {
+                    shipping_rate_data: {
+                        type: 'fixed_amount',
+                        fixed_amount: { amount: 499, currency: 'usd' },
+                        display_name: 'Standard Shipping',
+                        delivery_estimate: {
+                            minimum: { unit: 'business_day', value: 5 },
+                            maximum: { unit: 'business_day', value: 10 },
+                        },
+                    },
+                },
+                {
+                    shipping_rate_data: {
+                        type: 'fixed_amount',
+                        fixed_amount: { amount: 1299, currency: 'usd' },
+                        display_name: 'Express Shipping',
+                        delivery_estimate: {
+                            minimum: { unit: 'business_day', value: 2 },
+                            maximum: { unit: 'business_day', value: 3 },
+                        },
+                    },
+                },
+            ],
+        };
+
+        if (taxRateId) {
+            lineItems.forEach(function(li) {
+                li.tax_rates = [taxRateId];
+            });
+        }
+
+        const session = await stripe.checkout.sessions.create(sessionOptions);
 
         return new Response(JSON.stringify({ url: session.url }), {
             headers: { 'Content-Type': 'application/json' },
