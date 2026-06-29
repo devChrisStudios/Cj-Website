@@ -105,7 +105,7 @@ function renderDashboard(orders) {
             '<td>' + shippingHtml + '</td>' +
             '<td>' + total + '</td>' +
             '</tr>';
-    }).join('') || '<tr><td colspan="4" style="text-align:center;color:#888;padding:2rem">No orders yet</td></tr>';
+    }).join('') || '<tr><td colspan="5" style="text-align:center;color:#888;padding:2rem">No orders yet</td></tr>';
 
     return '<!DOCTYPE html>' +
     '<html lang="en">' +

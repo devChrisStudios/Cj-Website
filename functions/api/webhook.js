@@ -16,7 +16,17 @@ export async function onRequest(context) {
 
         if (event.type === 'checkout.session.completed') {
             const session = event.data.object;
-            const items = JSON.parse(session.metadata.cart_json || '[]');
+            const cartRef = session.metadata.cart_ref;
+
+            let items = [];
+            if (cartRef) {
+                const cartData = await context.env.DECAL_UPLOADS.get('cart_session/' + cartRef + '.json');
+                if (cartData) {
+                    const text = await cartData.text();
+                    items = JSON.parse(text);
+                    await context.env.DECAL_UPLOADS.delete('cart_session/' + cartRef + '.json');
+                }
+            }
 
             const customer = session.customer_details || {};
             const shipping = session.shipping_details || {};

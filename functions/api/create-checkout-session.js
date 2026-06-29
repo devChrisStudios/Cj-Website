@@ -14,6 +14,10 @@ export async function onRequest(context) {
         const { items } = await context.request.json();
         const origin = new URL(context.request.url).origin;
 
+        // Save cart items to R2 to avoid Stripe's 500-char metadata limit
+        const cartRef = 'cart_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+        await context.env.DECAL_UPLOADS.put('cart_session/' + cartRef + '.json', JSON.stringify(items));
+
         const lineItems = items.map(function(item) {
             var descParts = [];
 
@@ -59,7 +63,7 @@ export async function onRequest(context) {
                 enabled: true,
             },
             metadata: {
-                cart_json: JSON.stringify(items),
+                cart_ref: cartRef,
             },
         });
 
