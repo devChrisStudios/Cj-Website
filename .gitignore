@@ -21,3 +21,6 @@ images/*.ai
 
 # Local agent instructions (not for public repo)
 AGENTS.md
+
+# Local pending-approval notes (not for public repo)
+PENDING_APPROVAL.md

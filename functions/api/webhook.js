@@ -19,12 +19,13 @@ export async function onRequest(context) {
             const cartRef = session.metadata.cart_ref;
 
             let items = [];
+            let cartSnapshotLoaded = false;
             if (cartRef) {
                 const cartData = await context.env.DECAL_UPLOADS.get('cart_session/' + cartRef + '.json');
                 if (cartData) {
                     const text = await cartData.text();
                     items = JSON.parse(text);
-                    await context.env.DECAL_UPLOADS.delete('cart_session/' + cartRef + '.json');
+                    cartSnapshotLoaded = true;
                 }
             }
 
@@ -40,27 +41,42 @@ export async function onRequest(context) {
                 if (!Array.isArray(existingOrders)) existingOrders = [];
             }
 
-            existingOrders.push({
-                sessionId: session.id,
-                customerEmail: customer.email || null,
-                customerName: customer.name || null,
-                customerPhone: customer.phone || null,
-                shippingName: shipping.name || null,
-                shippingAddress: {
-                    line1: address.line1 || null,
-                    line2: address.line2 || null,
-                    city: address.city || null,
-                    state: address.state || null,
-                    postalCode: address.postal_code || null,
-                    country: address.country || null,
-                },
-                paid: true,
-                amountTotal: session.amount_total,
-                createdAt: new Date().toISOString(),
-                items: items,
+            // Idempotency: Stripe may retry a webhook delivery, so don't record the
+            // same session twice.
+            var alreadyRecorded = existingOrders.some(function(o) {
+                return o.sessionId === session.id;
             });
 
-            await context.env.DECAL_UPLOADS.put('orders.json', JSON.stringify(existingOrders));
+            if (!alreadyRecorded) {
+                existingOrders.push({
+                    sessionId: session.id,
+                    customerEmail: customer.email || null,
+                    customerName: customer.name || null,
+                    customerPhone: customer.phone || null,
+                    shippingName: shipping.name || null,
+                    shippingAddress: {
+                        line1: address.line1 || null,
+                        line2: address.line2 || null,
+                        city: address.city || null,
+                        state: address.state || null,
+                        postalCode: address.postal_code || null,
+                        country: address.country || null,
+                    },
+                    paid: true,
+                    amountTotal: session.amount_total,
+                    createdAt: new Date().toISOString(),
+                    items: items,
+                });
+
+                await context.env.DECAL_UPLOADS.put('orders.json', JSON.stringify(existingOrders));
+            }
+
+            // Only drop the cart snapshot once the order has been written, so a
+            // retried delivery that arrives before the first one finished still
+            // has the item details to record.
+            if (cartSnapshotLoaded) {
+                await context.env.DECAL_UPLOADS.delete('cart_session/' + cartRef + '.json');
+            }
         }
 
         return new Response(JSON.stringify({ received: true }));
