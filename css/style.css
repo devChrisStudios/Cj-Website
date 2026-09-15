@@ -689,11 +689,17 @@ p {
 
 /* 3-column grid for Standard / White / Black pack cards */
 .packs-grid-3 {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: var(--space-lg);
     max-width: 1100px;
     margin: 0 auto;
+}
+
+.packs-grid-3 .card {
+    flex: 1 1 300px;
+    max-width: 340px;
 }
 
 /* 2-column grid for custom decal cards */
