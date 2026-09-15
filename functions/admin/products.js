@@ -717,7 +717,7 @@ export async function onRequest(context) {
                 product.handleDefault = formData.get('handleDefault') || undefined;
                 product.designLink = formData.get('designLink') || undefined;
                 product.designLinkText = formData.get('designLinkText') || undefined;
-                product.hasUpload = true;
+                product.hasUpload = type === 'custom-decal';
 
                 // Clean up undefined/empty values for cleaner JSON
                 for (var key3 in product) {

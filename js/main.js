@@ -348,51 +348,95 @@ function initShopPage() {
     
     const page = document.body.dataset.page;
     
-    if (page === 'shop') {
-        const packsContainer = document.getElementById('products-packs');
-        const decalsContainer = document.getElementById('products-decals');
-        const customContainer = document.getElementById('products-custom');
-        
-        if (packsContainer || decalsContainer || customContainer) {
-            fetch('/api/products')
-                .then(function(res) { return res.json(); })
-                .then(function(data) {
-                    const products = data.products || [];
-                    const packs = [];
-                    const decals = [];
-                    const customDecals = [];
-                    
-                    products.forEach(function(p) {
-                        if (p.type === 'pack') packs.push(p);
-                        else if (p.type === 'decal') decals.push(p);
-                        else if (p.type === 'custom-decal') customDecals.push(p);
-                    });
-                    
-                    if (packsContainer) {
-                        packsContainer.innerHTML = packs.map(renderPackCard).join('');
-                    }
-                    if (decalsContainer) {
-                        decalsContainer.innerHTML = decals.map(renderDecalCard).join('');
-                    }
-                    if (customContainer) {
-                        customContainer.innerHTML = customDecals.map(renderCustomDecalCard).join('');
-                    }
-                    
-                    bindShopHandlers();
-                })
-                .catch(function() {
-                    var msg = '<p style="text-align:center;color:#666;grid-column:1/-1">Failed to load products. Please try again later.</p>';
-                    if (packsContainer) packsContainer.innerHTML = msg;
-                    if (decalsContainer) decalsContainer.innerHTML = msg;
-                    if (customContainer) customContainer.innerHTML = msg;
-                    bindShopHandlers();
+    const packsContainer = document.getElementById('products-packs');
+    const decalsContainer = document.getElementById('products-decals');
+    const customContainer = document.getElementById('products-custom');
+    const otherContainer = document.getElementById('products-other');
+    const otherSection = document.getElementById('other-products-section');
+    
+    if (packsContainer || decalsContainer || customContainer || otherContainer) {
+        fetch('/api/products')
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                const products = data.products || [];
+                const packs = [];
+                const decals = [];
+                const customDecals = [];
+                const others = [];
+                
+                products.forEach(function(p) {
+                    if (p.type === 'pack') packs.push(p);
+                    else if (p.type === 'decal') decals.push(p);
+                    else if (p.type === 'custom-decal') customDecals.push(p);
+                    else others.push(p);
                 });
-        } else {
-            bindShopHandlers();
-        }
+                
+                // Home page only shows packs marked "featured" (admin can toggle
+                // this with the "Show on the home page" checkbox); the shop shows all.
+                const visiblePacks = page === 'home'
+                    ? packs.filter(function(p) { return p.featured; })
+                    : packs;
+                
+                if (packsContainer) {
+                    packsContainer.innerHTML = visiblePacks.map(renderPackCard).join('');
+                }
+                if (decalsContainer) {
+                    decalsContainer.innerHTML = decals.map(renderDecalCard).join('');
+                }
+                if (customContainer) {
+                    customContainer.innerHTML = customDecals.map(renderCustomDecalCard).join('');
+                }
+                if (otherContainer && otherSection) {
+                    if (others.length > 0) {
+                        otherSection.style.display = '';
+                        otherContainer.innerHTML = others.map(renderOtherCard).join('');
+                    } else {
+                        otherSection.style.display = 'none';
+                        otherContainer.innerHTML = '';
+                    }
+                }
+                
+                if (page === 'home') {
+                    addFadeInClasses();
+                }
+                
+                bindShopHandlers();
+            })
+            .catch(function() {
+                var msg = '<p style="text-align:center;color:#666;grid-column:1/-1">Failed to load products. Please try again later.</p>';
+                if (packsContainer) packsContainer.innerHTML = msg;
+                if (decalsContainer) decalsContainer.innerHTML = msg;
+                if (customContainer) customContainer.innerHTML = msg;
+                bindShopHandlers();
+            });
     } else {
         bindShopHandlers();
     }
+}
+
+// Renders a product of any admin-created type. Reuses the existing cards and
+// picks the closest fit based on which fields the product actually has.
+function renderOtherCard(p) {
+    if (p.colors && p.colors.length > 0) {
+        return renderDecalCard(p);
+    }
+    if (p.hasUpload) {
+        return renderCustomDecalCard(p);
+    }
+    return renderPackCard(p);
+}
+
+// Restores the fade-in entrance animation the home page cards had when they
+// were still hardcoded in index.html.
+function addFadeInClasses() {
+    ['products-packs', 'products-decals', 'products-custom', 'products-other'].forEach(function(id) {
+        const container = document.getElementById(id);
+        if (!container) return;
+        container.querySelectorAll('.card').forEach(function(card, i) {
+            card.classList.add('fade-in');
+            card.classList.add('fade-in-delay-' + Math.min(i + 1, 3));
+        });
+    });
 }
 
 function bindShopHandlers() {
