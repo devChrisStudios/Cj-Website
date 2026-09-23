@@ -54,6 +54,7 @@ export async function onRequest(context) {
         const session = await stripe.checkout.sessions.create({
             line_items: lineItems,
             mode: 'payment',
+            allow_promotion_codes: true,
             success_url: origin + '/cart?session_id={CHECKOUT_SESSION_ID}',
             cancel_url: origin + '/cart?cancelled=1',
             shipping_address_collection: {
