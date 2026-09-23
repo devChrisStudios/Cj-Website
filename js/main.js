@@ -631,6 +631,7 @@ function initCartPage() {
         cartEmpty.style.display = 'block';
         cartHasItems.style.display = 'none';
         if (cartSummary) cartSummary.style.display = 'none';
+        if (cartLayout) cartLayout.classList.add('cart-layout-empty');
         if (checkoutBtn) checkoutBtn.disabled = true;
         return;
     }
@@ -639,6 +640,7 @@ function initCartPage() {
     cartEmpty.style.display = 'none';
     cartHasItems.style.display = 'block';
     if (cartSummary) cartSummary.style.display = 'block';
+    if (cartLayout) cartLayout.classList.remove('cart-layout-empty');
     
     // --- Clear Cart button ---
     const clearBtn = document.getElementById('clear-cart-btn');
@@ -652,6 +654,7 @@ function initCartPage() {
                 cartEmpty.style.display = 'block';
                 cartHasItems.style.display = 'none';
                 cartSummary.style.display = 'none';
+                if (cartLayout) cartLayout.classList.add('cart-layout-empty');
                 updateCartSummary();
             }
         });

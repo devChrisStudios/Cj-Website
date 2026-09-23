@@ -1196,6 +1196,11 @@ p {
     align-items: start;
 }
 
+/* When the cart is empty, collapse to a single centered column */
+.cart-layout.cart-layout-empty {
+    grid-template-columns: 1fr;
+}
+
 /* Cart items list */
 .cart-items {
     background: var(--color-bg-alt);
